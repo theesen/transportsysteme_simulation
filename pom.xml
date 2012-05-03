@@ -4,4 +4,13 @@
   <artifactId>transport-simulation</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>transport_systeme_simulation</name>
+  <dependencies>
+  		<dependency>
+			<groupId>edu.gmu.cs</groupId>
+			<artifactId>mason</artifactId>
+			<version>16.0</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/mason.16.jar</systemPath>
+		</dependency>
+  </dependencies>
 </project>
