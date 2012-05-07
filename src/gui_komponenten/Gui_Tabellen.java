@@ -5,9 +5,11 @@ package gui_komponenten;
  * Gui_Tabellen.java requires no other files.
  */
 
-import guis.Starte_Gui;
+import guis.Init_Gui;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -15,7 +17,9 @@ import javax.swing.table.AbstractTableModel;
 
 import daten.Tabelle_Auftrag_Allgemein;
 import daten.Tabelle_Auftrag_Auftraege;
+import daten.Tabelle_Auftrag_Schiffsdaten;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
@@ -30,97 +34,69 @@ import java.awt.GridLayout;
 public class Gui_Tabellen extends JPanel {
 	
 	
-	
-	
-public static 	Object[][] datei_array_auftrag_allgemein_temp; 
-public	static String[] spalten_namen_allgemein_temp;  
-public static	Object[][] datei_array_auftrag_auftraege_temp;  
-public static	String[] spalten_namen_auftraege_temp; 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
     private boolean DEBUG = false;
 
     public Gui_Tabellen() {
-        super(new GridLayout(1,2));
-
-        Tabelle_Auftrag_Allgemein tablemodel = new Tabelle_Auftrag_Allgemein();
-        tablemodel.setSpalten_namen(spalten_namen_allgemein_temp);
-        tablemodel.setDatei_array(datei_array_auftrag_allgemein_temp);
+        super(new GridLayout(1,1));        
+        
+        JPanel pane_tabellen = new JPanel();
+		pane_tabellen.setLayout(new BoxLayout(pane_tabellen, BoxLayout.Y_AXIS));
         
         
-        JTable table = new JTable(tablemodel);
-        table.setPreferredScrollableViewportSize(new Dimension(800, 800));
-        table.setFillsViewportHeight(true);
+        
+        JTable table_auftrag_allgemein = new JTable(new Tabelle_Auftrag_Allgemein());
+        table_auftrag_allgemein.setPreferredScrollableViewportSize(new Dimension(800, 800));
+        table_auftrag_allgemein.setFillsViewportHeight(true);
 
         //Create the scroll pane and add the table to it.
-        JScrollPane scrollPane = new JScrollPane(table);
-
+        JScrollPane scrollPane = new JScrollPane(table_auftrag_allgemein);
+        JLabel label = new JLabel("Auftragsdaten Allgemein", JLabel.CENTER);
+        
         //Add the scroll pane to this panel.
-        add(scrollPane);
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
+        pane_tabellen.add(label);
+        pane_tabellen.add(scrollPane);
+        
+    	JTable table_auftrag_auftraege = new JTable(new Tabelle_Auftrag_Auftraege());
+        table_auftrag_auftraege.setPreferredScrollableViewportSize(new Dimension(800, 800));
+        table_auftrag_auftraege.setFillsViewportHeight(true);
+        JScrollPane scrollPane2 = new JScrollPane(table_auftrag_auftraege);
+        JLabel label2 = new JLabel("Auftragsdaten Auftraege", JLabel.CENTER);
+        label2.setAlignmentX(Component.CENTER_ALIGNMENT);
+        pane_tabellen.add(label2);
+        pane_tabellen.add(scrollPane2);
         
         
-        if (spalten_namen_auftraege_temp!=null){
-        	Tabelle_Auftrag_Auftraege tablemodel2= null;
-            tablemodel2 = new Tabelle_Auftrag_Auftraege();
-            tablemodel2.setSpalten_namen(spalten_namen_auftraege_temp);
-            tablemodel2.setDatei_array(datei_array_auftrag_auftraege_temp);
-            
-            JTable table2 = new JTable(tablemodel2);
-            table2.setPreferredScrollableViewportSize(new Dimension(800, 800));
-            table2.setFillsViewportHeight(true);
-            JScrollPane scrollPane2 = new JScrollPane(table2);
-            add(scrollPane2);
+        JTable table_auftrag_schiffsdaten = new JTable(new Tabelle_Auftrag_Schiffsdaten());
+        table_auftrag_schiffsdaten.setPreferredScrollableViewportSize(new Dimension(800, 800));
+        table_auftrag_schiffsdaten.setFillsViewportHeight(true);
+        JScrollPane scrollPane3 = new JScrollPane(table_auftrag_schiffsdaten);
+        JLabel label3 = new JLabel("Schiffsdaten", JLabel.CENTER);
+        label3.setAlignmentX(Component.CENTER_ALIGNMENT);
+        pane_tabellen.add(label3);
+        
+        pane_tabellen.add(scrollPane3);
+        
+        add(pane_tabellen);
+        
+        
+        
         }
-        
-        
-        
-        
-        
-   
-        
-        
-
-        
-    }
-
-   
-
-    /**
-     * Create the GUI and show it.  For thread safety,
-     * this method should be invoked from the
-     * event-dispatching thread.
-     */
-
-    public static void main(Object[][] datei_array_auftrag_allgemein, String[] spalten_namen_allgemein, Object[][] datei_array_auftrag_auftraege, String[] spalten_namen_auftraege) {
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
-    	
-    	
+       
     
-    	datei_array_auftrag_allgemein_temp =datei_array_auftrag_allgemein;
-    	spalten_namen_allgemein_temp = spalten_namen_allgemein;
-    	
-    	
-    	datei_array_auftrag_auftraege_temp =  datei_array_auftrag_auftraege;
-    	spalten_namen_auftraege_temp = spalten_namen_auftraege; 
+
+
+
+    public static void main() {
+  
     	
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
 
         	
         	
         	public void run() {
-            	Starte_Gui.main();
+            	Init_Gui.main();
             }
         });
     }

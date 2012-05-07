@@ -3,6 +3,8 @@
  */
 package jobs;
 
+import daten.Tabelle_Auftrag_Allgemein;
+import daten.Tabelle_Auftrag_Schiffsdaten;
 import gui_komponenten.Gui_Tabellen;
 
 /**
@@ -12,9 +14,8 @@ import gui_komponenten.Gui_Tabellen;
 public class Schiffsdaten_Auslesen {
 
 	/**
-	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main() {
 		// TODO Auto-generated method stub
 
 		
@@ -26,7 +27,9 @@ public class Schiffsdaten_Auslesen {
 	String[]spalten_namen = {"Heimathafen","Geschwindigkeit Revier"," Geschwindigkeit", "Marschfahrt"};
 	
 
-	Gui_Tabellen.main(datei_array, spalten_namen, null, null);
+	Tabelle_Auftrag_Schiffsdaten table_object_Auftrag_Schiffsdaten = new Tabelle_Auftrag_Schiffsdaten();
+	table_object_Auftrag_Schiffsdaten.setSpalten_namen(spalten_namen);
+	table_object_Auftrag_Schiffsdaten.setDatei_array(datei_array);
 	
 		
 		
