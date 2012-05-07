@@ -12,5 +12,19 @@
 			<scope>system</scope>
 			<systemPath>${basedir}/lib/mason.16.jar</systemPath>
 		</dependency>
+		
+		<dependency>
+			<groupId>edu.gmu.cs</groupId>
+			<artifactId>geomason</artifactId>
+			<version>1.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/geomason.1.1.jar</systemPath>
+		</dependency>
+		
+		
+		
+		
+		
+		
   </dependencies>
 </project>
