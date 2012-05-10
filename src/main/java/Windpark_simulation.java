@@ -46,8 +46,10 @@ public class Windpark_simulation {
 				 for (Object[] arr :  test3) {
 			            System.out.println(Arrays.toString(arr));
 		}
-				 
+		
+		
 				 
 	}
+	
 
 }
