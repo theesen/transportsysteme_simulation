@@ -13,6 +13,7 @@
 			<systemPath>${basedir}/lib/mason.16.jar</systemPath>
 		</dependency>
 
+
 	<dependency>
 			<groupId>edu.gmu.cs</groupId>
 			<artifactId>geomason</artifactId>
@@ -26,6 +27,7 @@
 	<artifactId>jts</artifactId>
 	<version>1.11</version>
 </dependency>	
+		
 		
 		
   </dependencies>

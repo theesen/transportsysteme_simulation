@@ -24,7 +24,7 @@ public class Schiffsdaten_Auslesen {
 	Object[][] datei_array = Datei_Importierer.main(new String[]{aktuelles_verzeichnis});		
 	
 	
-	String[]spalten_namen = {"Heimathafen","Geschwindigkeit Revier"," Geschwindigkeit", "Marschfahrt"};
+	String[]spalten_namen = {"Schiffsname","Heimathafen"," Geschwindigkeit_Revier", "Marschfahrt"};
 	
 
 	Tabelle_Auftrag_Schiffsdaten table_object_Auftrag_Schiffsdaten = new Tabelle_Auftrag_Schiffsdaten();

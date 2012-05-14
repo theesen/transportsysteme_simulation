@@ -56,7 +56,7 @@ public class Auftragsdaten_Auslesen {
 		Object[][] datei_array_auftrag_auftraege = new Object[row_auftraege_analyse][3];
 
 		for (int row = 0; row < datei_array_auftrag_allgemein.length; row++) {
-			datei_array_auftrag_allgemein[row][0] = "id" + id;
+			datei_array_auftrag_allgemein[row][0] = id;
 
 			for (int col = 0; col <= 3; col++) {
 				datei_array_auftrag_allgemein[row][col + 1] = datei_array[row][col];
@@ -66,7 +66,7 @@ public class Auftragsdaten_Auslesen {
 
 			for (int col = 4; col < datei_array[row].length - 1; col++) {
 
-				datei_array_auftrag_auftraege[row_auftraege][0] = "id" + id;
+				datei_array_auftrag_auftraege[row_auftraege][0] = id;
 				datei_array_auftrag_auftraege[row_auftraege][1] = datei_array[row][col];
 				datei_array_auftrag_auftraege[row_auftraege][2] = datei_array[row][col + 1];
 
