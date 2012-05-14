@@ -12,8 +12,8 @@
 			<scope>system</scope>
 			<systemPath>${basedir}/lib/mason.16.jar</systemPath>
 		</dependency>
-		
-		<dependency>
+
+	<dependency>
 			<groupId>edu.gmu.cs</groupId>
 			<artifactId>geomason</artifactId>
 			<version>1.1</version>
@@ -21,9 +21,11 @@
 			<systemPath>${basedir}/lib/geomason.1.1.jar</systemPath>
 		</dependency>
 		
-		
-		
-		
+<dependency>
+	<groupId>com.vividsolutions</groupId>
+	<artifactId>jts</artifactId>
+	<version>1.11</version>
+</dependency>	
 		
 		
   </dependencies>
