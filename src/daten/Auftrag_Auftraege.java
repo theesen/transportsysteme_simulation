@@ -5,16 +5,28 @@ package daten;
  * @author thees
  *
  */
-public class Auftraege_Auftraege extends Tabelle_Auftrag_Auftraege {
+public class Auftrag_Auftraege extends Tabelle_Auftrag_Auftraege {
 	
 	private Object[][] auftraege_daten = getDatei_array();
+	
+	public Object [][] getAuftraege_array(){
+		return auftraege_daten;
+	}
+	
+	public StringBuffer getAuftrag_id_List(){
+		StringBuffer result = new StringBuffer("Die folgenden IDs existieren:\n");
+		for (int i = 0; i < auftraege_daten.length; i++){
+			result.append((Integer) auftraege_daten[i][0] + "; ");
+		}
+		return result;
+	}
 	
 	public String getAuftrag_Location(int auftragsnummer){
 		return (String) auftraege_daten[auftragsnummer][1];
 	}
 	
-	public int getAuftrag_Aufenthaltszeit(int auftragsnummer){
-		return (Integer) auftraege_daten[auftragsnummer][2];
+	public String getAuftrag_Aufenthaltszeit(int auftragsnummer){
+		return (String) auftraege_daten[auftragsnummer][2];
 	}
 	
 	/**
