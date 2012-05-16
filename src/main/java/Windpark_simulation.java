@@ -5,7 +5,7 @@ import guis.Init_Gui;
 import java.util.Arrays;
 
 import daten.Auftrag_Auftraege;
-import daten.Auftrag_Schiffsdaten;
+
 import daten.Tabelle_Auftrag_Allgemein;
 import daten.Tabelle_Auftrag_Auftraege;
 import daten.Tabelle_Auftrag_Schiffsdaten;
@@ -57,12 +57,12 @@ public class Windpark_simulation {
 		System.out.println(test4.getAuftrag_Aufenthaltszeit(1));
 		System.out.println(test4.getAuftrag_id_List());
 		
-		Auftrag_Schiffsdaten test5 = new Auftrag_Schiffsdaten();
+		//Auftrag_Schiffsdaten test5 = new Auftrag_Schiffsdaten();
 		
-		System.out.println(test5.auftrag_Ship_Heimathafen("Emma"));
-		System.out.println("________________________________-");
-		System.out.println(test5.auftrag_getShipList());
-		System.out.println("________________________________-");
+//		System.out.println(test5.auftrag_Ship_Heimathafen("Emma"));
+//		System.out.println("________________________________-");
+//		System.out.println(test5.auftrag_getShipList());
+//		System.out.println("________________________________-");
 		Ship emma = new Ship("Emma", Tabelle_Auftrag_Schiffsdaten.getDatei_array());
 		System.out.println(emma.DebugInfo());
 				 

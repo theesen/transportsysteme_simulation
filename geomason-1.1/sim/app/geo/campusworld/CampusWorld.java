@@ -37,7 +37,7 @@ public class CampusWorld extends SimState
     public static final int HEIGHT = 300; 
     
     /** How many agents in the simulation */ 
-	public int numAgents = 1000;
+	public int numAgents = 1;
 
     /** Fields to hold the associated GIS information */ 
     public GeomVectorField walkways = new GeomVectorField(WIDTH, HEIGHT);

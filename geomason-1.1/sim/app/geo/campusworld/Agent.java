@@ -74,8 +74,14 @@ public class Agent implements Steppable {
     public void start(CampusWorld state)
     {
         // Find the first line segment and set our position over the start coordinate.
-    	int walkway = state.random.nextInt(state.walkways.getGeometries().numObjs);
+    	//int walkway = state.random.nextInt(state.walkways.getGeometries().numObjs);
+    	
+    	int walkway = 1000; 
+    	System.out.println(walkway);
         MasonGeometry mg = (MasonGeometry)state.walkways.getGeometries().objs[walkway];
+    	//MasonGeometry mg = ;    	
+        System.out.println(mg.getGeometry());
+        
         setNewRoute((LineString) mg.getGeometry(), true);
     }
     
@@ -89,14 +95,18 @@ public class Agent implements Steppable {
             {
                 DirectedEdgeStar directedEdgeStar = currentJunction.getOutEdges();
                 Object[] edges = directedEdgeStar.getEdges().toArray();
-
+                System.out.println("New Edge");
+                System.out.println("Edges length: " + edges.length);
+                System.out.println("location: " + location);
+                
                 if (edges.length > 0)
                     {
                         // pick one randomly
                         int i = geoTest.random.nextInt(edges.length);
+                        System.out.println("random" + i);
                         GeomPlanarGraphDirectedEdge directedEdge = (GeomPlanarGraphDirectedEdge) edges[i];
                         GeomPlanarGraphEdge edge = (GeomPlanarGraphEdge) directedEdge.getEdge();
-
+                        
                         // and start moving along it
                         LineString newRoute = edge.getLine();
                         Point startPoint = newRoute.getStartPoint();
@@ -124,15 +134,21 @@ public class Agent implements Steppable {
      */
     private void setNewRoute(LineString line, boolean start)
     {
-        segment = new LengthIndexedLine(line);
-        startIndex = segment.getStartIndex();
-        endIndex = segment.getEndIndex();
+    	
+    	
+        segment =new LengthIndexedLine(line);
+//        startIndex = segment.getStartIndex();
+//        endIndex = segment.getEndIndex();
+//        startIndex=;
+//        endIndex=
+  
 
         Coordinate startCoord = null;
 
         if ( start )
             {
                 startCoord = segment.extractPoint(startIndex);
+                System.out.println(startCoord);
                 currentIndex = startIndex;
                 moveRate = basemoveRate; // ensure we move forward along segment
             }
