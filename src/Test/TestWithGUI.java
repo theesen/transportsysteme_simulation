@@ -5,6 +5,8 @@ import java.awt.Paint;
 
 import javax.swing.JFrame;
 
+import sim.app.geo.colorworld.ColorWorld;
+import sim.app.geo.colorworld.ColorWorldPortrayal;
 import sim.display.Console;
 import sim.display.Controller;
 import sim.display.Display2D;
@@ -12,8 +14,10 @@ import sim.display.GUIState;
 import sim.engine.SimState;
 
 import sim.portrayal.SimplePortrayal2D;
+import sim.portrayal.geo.GeomPortrayal;
 import sim.portrayal.geo.GeomVectorFieldPortrayal;
 import sim.portrayal.simple.OvalPortrayal2D;
+import sim.portrayal.simple.ShapePortrayal2D;
 import sim.util.gui.SimpleColorMap;
 
 public class TestWithGUI extends GUIState{
@@ -67,11 +71,15 @@ public class TestWithGUI extends GUIState{
 	private void setupPortrayals(){
 		Test welt = (Test)state;
 		
-		agentPortrayal.setField(welt.agents);
-		agentPortrayal.setPortrayalForAll(new OvalPortrayal2D(Color.RED, 6.0));
-		
 		landPortrayal.setField(welt.see);
-		landPortrayal.setPortrayalForAll(new SimplePortrayal2D());
+		System.out.println(Test.NUM_AGENTS);
+		landPortrayal.setPortrayalForAll(new GeomPortrayal(Color.BITMASK,true)); 
+		
+		
+		agentPortrayal.setField(welt.agents);
+		agentPortrayal.setPortrayalForAll(new OvalPortrayal2D(Color.RED, 5.0));
+		
+		
 		
 		display.reset();
 		display.setBackground(Color.WHITE);

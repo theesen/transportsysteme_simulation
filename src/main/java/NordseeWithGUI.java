@@ -11,7 +11,7 @@ import sim.util.gui.SimpleColorMap;
 
 /**
  *  The display GUI for the ColorWorld GeoMASON example.  Much of this file is similar to other 
- *  MASON GUI code.  The only exception is that we use our custom ColorWorldPortrayal for the 
+ *  MASON GUI code.  The only exception is that we use our custom TestWorldPortrayal for the 
  *  voting districts to handle the shading.    
  *
  */

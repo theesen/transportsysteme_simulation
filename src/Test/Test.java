@@ -34,8 +34,9 @@ public class Test extends SimState {
 		super (seed);
 		
 		try {
-			ShapeFileImporter importer = new ShapeFileImporter();
-			importer.ingest("/shapefila_data/A_Punkte_Shape/A_Punkte", Test.class, see);
+			GeoToolsImporter importer = new GeoToolsImporter();
+			//ShapeFileImporter importer = new ShapeFileImporter();
+			importer.ingest("/A_Punkte_Shape/ne_50m_admin_0_countries.shp", Test.class, see);
 			
 		}
 		catch(FileNotFoundException ex){
@@ -53,9 +54,13 @@ public class Test extends SimState {
 				throw new RuntimeException("Keine Geometrien gefunden!");
 			}
 			
-			 MasonGeometry targetPoint = ((MasonGeometry)allgeometries.objs[random.nextInt(allgeometries.numObjs)]);
+			 MasonGeometry targetPoint = ((MasonGeometry)allgeometries.objs[1]);
 			
-			a.setLocation((Point) targetPoint.geometry);
+			System.out.println( targetPoint.geometry.getInteriorPoint()); 
+			System.out.println( targetPoint.geometry.getCoordinate());
+			a.setLocation((Point) targetPoint.geometry.getCentroid());
+			
+			agents.addGeometry(new MasonGeometry(a.getGeometry()));
 			schedule.scheduleRepeating(a);
 		}
 	}
