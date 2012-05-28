@@ -2,8 +2,10 @@ package test;
 
 import java.io.FileNotFoundException;
 
+import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.geom.util.AffineTransformation;
 
 import sim.engine.SimState;
 import sim.field.geo.GeomVectorField;
@@ -17,8 +19,8 @@ public class Test extends SimState {
 	 * 
 	 */
 	private static final long serialVersionUID = 2499844612548898662L;
-	public static final int WIDTH = 300;
-	public static final int HEIGHT = 300;
+	public static final int WIDTH = 360;
+	public static final int HEIGHT = 142;
 	
 	public static int NUM_AGENTS = 1;
 	
@@ -54,12 +56,21 @@ public class Test extends SimState {
 				throw new RuntimeException("Keine Geometrien gefunden!");
 			}
 			
-			 MasonGeometry targetPoint = ((MasonGeometry)allgeometries.objs[1]);
+			 MasonGeometry targetPoint = ((MasonGeometry)allgeometries.objs[238]);
 			
 			System.out.println( targetPoint.geometry.getInteriorPoint()); 
 			System.out.println( targetPoint.geometry.getCoordinate());
-			a.setLocation((Point) targetPoint.geometry.getCentroid());
-			
+			System.out.println( targetPoint.geometry.getCentroid());
+			System.out.println((Point) targetPoint.geometry.getCentroid());
+			Coordinate  test = new Coordinate  (6.6251,53.9908);
+			//a.setLocation((Point) targetPoint.geometry.getCentroid());
+
+			//test3.apply(filter);
+			MasonGeometry test5 = new MasonGeometry();
+			AffineTransformation translate = null;
+	
+			 a.setLocation(targetPoint.geometry.getCentroid());
+			 System.out.println(a.getGeometry());
 			agents.addGeometry(new MasonGeometry(a.getGeometry()));
 			schedule.scheduleRepeating(a);
 		}

@@ -23,7 +23,7 @@ public class Agent implements Steppable{
     int direction;
     Point location = null;
     
-    double moveRate = 10;
+    double moveRate = 1;
     
     public Agent(int d){
     	direction = d;
@@ -38,6 +38,7 @@ public class Agent implements Steppable{
     	Test testa = (Test) state;
     	GeomVectorField see = testa.see;
     	Coordinate coord = (Coordinate) location.getCoordinate().clone();
+    	System.out.println(coord);
     	AffineTransformation translate = null;
     	
     	switch (direction)
@@ -62,6 +63,7 @@ public class Agent implements Steppable{
             translate = AffineTransformation.translationInstance(-moveRate,moveRate);
             coord.x -= moveRate;
             coord.y += moveRate; 
+            System.out.println(coord);
             break;
         case NE : // move upper right
             translate = AffineTransformation.translationInstance( moveRate, moveRate );
@@ -80,10 +82,27 @@ public class Agent implements Steppable{
             break;
         }
     	
-    	location.apply(translate);
+    //	System.out.println(see.isInsideConvexHull(coord));
+    	
+    	System.out.println("höhe"+see.getHeight());
+    	System.out.println("width"+see.getWidth());
+    	System.out.println("x" + coord.x);
+    	System.out.println("y"+coord.y);
+    	
+    	System.out.println(see.isCovered(coord));
+    	System.out.println(coord);
+    	
+    	
+    	if (see.isCovered(coord))  { 
+        	//cState.county.updateTree(location, translate); 
+        	location.apply(translate);
+        }
+        else // try randomly moving in different direction if trying to stray
+            direction = 0;
+    }
     	
     }
     
 	
 
-}
+
