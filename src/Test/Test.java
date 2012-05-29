@@ -1,9 +1,10 @@
-package test;
+package Test;
 
 import java.io.FileNotFoundException;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.util.AffineTransformation;
 
@@ -18,9 +19,11 @@ public class Test extends SimState {
 	/**
 	 * 
 	 */
+	 private Point location;
+	
 	private static final long serialVersionUID = 2499844612548898662L;
-	public static final int WIDTH = 360;
-	public static final int HEIGHT = 142;
+	   public static int WIDTH = 400; 
+	    public static int HEIGHT = 480;
 	
 	public static int NUM_AGENTS = 1;
 	
@@ -36,10 +39,16 @@ public class Test extends SimState {
 		super (seed);
 		
 		try {
-			GeoToolsImporter importer = new GeoToolsImporter();
-			//ShapeFileImporter importer = new ShapeFileImporter();
-			importer.ingest("/A_Punkte_Shape/ne_50m_admin_0_countries.shp", Test.class, see);
+			//GeoToolsImporter importer = new GeoToolsImporter();
+			ShapeFileImporter importer = new ShapeFileImporter();
+			importer.ingest("../ne_50m_admin_0_countries", Test.class, see);
 			
+//			HEIGHT=(int) see.getHeight();
+//			HEIGHT=HEIGHT*20;
+//			System.out.println(HEIGHT);
+//			WIDTH=(int) see.getWidth();
+//			WIDTH=WIDTH*20;
+//			System.out.println(WIDTH);
 		}
 		catch(FileNotFoundException ex){
 			System.out.println("Error opening shapefile!"+ex);
@@ -56,21 +65,30 @@ public class Test extends SimState {
 				throw new RuntimeException("Keine Geometrien gefunden!");
 			}
 			
-			 MasonGeometry targetPoint = ((MasonGeometry)allgeometries.objs[238]);
+			 MasonGeometry targetPoint = ((MasonGeometry)allgeometries.objs[4]);
 			
-			System.out.println( targetPoint.geometry.getInteriorPoint()); 
-			System.out.println( targetPoint.geometry.getCoordinate());
-			System.out.println( targetPoint.geometry.getCentroid());
-			System.out.println((Point) targetPoint.geometry.getCentroid());
-			Coordinate  test = new Coordinate  (6.6251,53.9908);
-			//a.setLocation((Point) targetPoint.geometry.getCentroid());
+//			System.out.println( targetPoint.geometry.getInteriorPoint()); 
+//			System.out.println( targetPoint.geometry.getCoordinate());
+			System.out.println( "Punkt setzen auf" +targetPoint.geometry.getInteriorPoint());
+		//	System.out.println((Point) targetPoint.geometry.getCentroid());
+		
+	//		a.setLocation((Point) targetPoint.geometry.getInteriorPoint());
 
-			//test3.apply(filter);
-			MasonGeometry test5 = new MasonGeometry();
-			AffineTransformation translate = null;
+					
 	
-			 a.setLocation(targetPoint.geometry.getCentroid());
-			 System.out.println(a.getGeometry());
+			GeometryFactory fact = new GeometryFactory();
+			location = fact.createPoint(new Coordinate(121,50));
+		
+//			MasonGeometry mg = new MasonGeometry(location); 
+//            mg.isMovable = true; 
+//            agents.addGeometry(mg);
+            
+			
+			
+			a.setLocation(location);
+			System.out.println(a.getGeometry());
+			 
+			 
 			agents.addGeometry(new MasonGeometry(a.getGeometry()));
 			schedule.scheduleRepeating(a);
 		}
