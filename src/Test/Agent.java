@@ -99,7 +99,7 @@ public class Agent implements Steppable{
     	 
     	// location.apply(translate);
     	  	
-    	  	coord.x= coord.x+1;
+    	  //	coord.x= coord.x+1;
     	         
     	  		
     	    System.out.println(coord);

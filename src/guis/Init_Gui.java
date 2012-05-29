@@ -11,8 +11,6 @@ import gui_komponenten.Gui_Tabellen;
 
 import javax.swing.*;
 
-import main.java.StudentsWithUI;
-
 import java.awt.*;
 //Event brauchen wir für das Ereigniss, wenn ein Button geklickt wird
 import java.awt.event.*;
@@ -57,7 +55,7 @@ public class Init_Gui extends JFrame {
 	        { 
 	            public void actionPerformed(ActionEvent ae) 
 	            { 
-	                StudentsWithUI.main(null);
+	           //     StudentsWithUI.main(null);
 	            }
 	        });
 	    }
@@ -101,7 +99,7 @@ public class Init_Gui extends JFrame {
 	public void actionPerformed(ActionEvent e) {
 		  if(e.getActionCommand().equals("action1")) {
 		    
-			  StudentsWithUI.main(null);
+		//	  StudentsWithUI.main(null);
 			  
 			  
 		  }
