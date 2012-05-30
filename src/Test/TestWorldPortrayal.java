@@ -5,7 +5,7 @@ Free License version 3.0
 
 See the file "LICENSE" for more information
 */
-package test;
+package Test;
 
 import java.awt.Graphics2D;
 

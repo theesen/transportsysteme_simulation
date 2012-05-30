@@ -1,4 +1,4 @@
-package test;
+package Test;
 
 import java.io.FileNotFoundException;
 
@@ -47,7 +47,7 @@ public class Test extends SimState {
 	
 	private void addAgents(){
 		for (int i = 0; i < NUM_AGENTS; i++){
-			Agent a = new Agent(1);
+			Agent a = new Agent(2);
 			Bag allgeometries = see.getGeometries();
 			
 			if (allgeometries.isEmpty()){
