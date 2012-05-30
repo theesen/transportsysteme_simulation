@@ -15,7 +15,7 @@ public class Tabelle_Auftrag_Allgemein extends AbstractTableModel{
 	 * @param args
 	 */
 	static String[]spalten_namen= null;
-	 static Object[][]datei_array= null;     
+	static Object[][]datei_array= null;     
 	
 	public  String[] getSpalten_namen() {
 		return spalten_namen;

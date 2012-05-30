@@ -25,7 +25,7 @@ public class Windpark_simulation {
 
 		Auftragsdaten_Auslesen.main();
 		Schiffsdaten_Auslesen.main();
-		System.out.println("Wir sind in windpark simulation");
+		System.out.println("Wir sind in windpark Simulation");
 		
 		Init_Gui.main();
 		
@@ -63,8 +63,8 @@ public class Windpark_simulation {
 //		System.out.println("________________________________-");
 //		System.out.println(test5.auftrag_getShipList());
 //		System.out.println("________________________________-");
-//		Ship emma = new Ship("Emma", Tabelle_Auftrag_Schiffsdaten.getDatei_array());
-//		System.out.println(emma.DebugInfo());
+		//Ship emma = new Ship("Emma", Tabelle_Auftrag_Schiffsdaten.getDatei_array());
+		//System.out.println(emma.DebugInfo());
 				 
 	}
 	

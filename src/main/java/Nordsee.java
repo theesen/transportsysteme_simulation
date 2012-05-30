@@ -20,7 +20,7 @@ public class Nordsee extends SimState
 	public static final int WIDTH = 300; 
 	public static final int HEIGHT = 300; 
 
-	// number of agents in the simulation
+	// number of agents in the Simulation
     public static int NUM_AGENTS = 1;
 
     // where all the county geometry lives
@@ -106,7 +106,7 @@ public class Nordsee extends SimState
  
         agents.clear(); // remove any agents from previous runs
 
-        // add agents to the simulation
+        // add agents to the Simulation
         addAgents();
 
         // ensure both GeomFields Color same area
