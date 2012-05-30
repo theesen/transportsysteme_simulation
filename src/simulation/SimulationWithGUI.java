@@ -24,6 +24,8 @@ public class SimulationWithGUI extends GUIState{
 	GeomVectorFieldPortrayal landPortrayal = new GeomVectorFieldPortrayal();
 	GeomVectorFieldPortrayal agentPortrayal = new GeomVectorFieldPortrayal();
 	GeomVectorFieldPortrayal ortePortrayal = new GeomVectorFieldPortrayal();
+	GeomVectorFieldPortrayal a_punktePortrayal = new GeomVectorFieldPortrayal();
+	GeomVectorFieldPortrayal b_punktePortrayal = new GeomVectorFieldPortrayal();
 	GeomVectorFieldPortrayal c_punktePortrayal = new GeomVectorFieldPortrayal();
 	
 	public SimulationWithGUI(SimState state){
@@ -44,6 +46,8 @@ public class SimulationWithGUI extends GUIState{
 		display.attach(landPortrayal, "Landschaft");
 		display.attach(agentPortrayal, "Agenten");
 		display.attach(ortePortrayal, "Orte");
+		display.attach(a_punktePortrayal, "A_Punkte");
+		display.attach(b_punktePortrayal, "B_Punkte");
 		display.attach(c_punktePortrayal, "C_Punkte");
 	
 		
@@ -80,6 +84,12 @@ public class SimulationWithGUI extends GUIState{
 		
 		ortePortrayal.setField(welt.orte);
         ortePortrayal.setPortrayalForAll(new GeomPortrayal(Color.BLUE,true));
+        
+        a_punktePortrayal.setField(welt.a_punkte);
+        a_punktePortrayal.setPortrayalForAll(new GeomPortrayal(Color.ORANGE,true));
+        
+        b_punktePortrayal.setField(welt.b_punkte);
+        b_punktePortrayal.setPortrayalForAll(new GeomPortrayal(Color.YELLOW,true));
 		
         c_punktePortrayal.setField(welt.c_punkte);
         c_punktePortrayal.setPortrayalForAll(new GeomPortrayal(Color.GREEN,true));

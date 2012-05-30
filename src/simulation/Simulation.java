@@ -48,6 +48,10 @@ public class Simulation extends SimState {
 	
 	public GeomVectorField c_punkte = new GeomVectorField(WIDTH, HEIGHT);
 	
+	public GeomVectorField a_punkte = new GeomVectorField(WIDTH, HEIGHT);
+	
+	public GeomVectorField b_punkte = new GeomVectorField(WIDTH, HEIGHT);
+	
 	public int getNumAgents(){ return NUM_AGENTS;}
 	
 	public void setNumAgents(int a){ if (a>0) NUM_AGENTS = a;}
@@ -65,6 +69,14 @@ public class Simulation extends SimState {
 			 // read in the orte Shape file 
 			System.out.println("reading orte layer");
             importer.ingest("../Orte.shp", Simulation.class, orte, null);
+            
+            //read in Windpark A Shape file
+            System.out.println("reading a punkte layer");
+            importer.ingest("../A_Punkte.shp", Simulation.class, a_punkte, null);
+            
+            //read in Windpark B Shape file
+            System.out.println("reading b punkte layer");
+            importer.ingest("../B_Punkte.shp", Simulation.class, b_punkte, null);
 				
             // read in the Windpark C Shape file 
             System.out.println("reading c punkte layer");
@@ -73,9 +85,13 @@ public class Simulation extends SimState {
             // MBR zusammen basteln
             Envelope MBR = see.getMBR();
             MBR.expandToInclude(orte.getMBR());
+            MBR.expandToInclude(a_punkte.getMBR());
+            MBR.expandToInclude(b_punkte.getMBR());
             MBR.expandToInclude(c_punkte.getMBR());
             see.setMBR(MBR);
             orte.setMBR(MBR);
+            a_punkte.setMBR(MBR);
+            b_punkte.setMBR(MBR);
             c_punkte.setMBR(MBR);
             
             
@@ -89,7 +105,9 @@ public class Simulation extends SimState {
 			System.out.println("Neue Breite der Karte: " +WIDTH);
 			System.out.println("*---------------------------------------------------------*");
             
-            // Windpark C Array befühlen
+            // Windpark A-C Array befühlen
+			new Windpark_A_Koordinaten(a_punkte.getGeometries());
+			new Windpark_B_Koordinaten(b_punkte.getGeometries());
 			new Windpark_C_Koordinaten(c_punkte.getGeometries());
 			new Orte_Koordinaten(orte.getGeometries());
 
