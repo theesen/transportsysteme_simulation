@@ -72,7 +72,7 @@ public class Ship implements Steppable{
 //			}
 //		}
 //								
-//				location = null;		
+//				standort_coordinate = null;		
 //		
 //	}
 	

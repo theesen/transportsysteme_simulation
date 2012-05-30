@@ -93,7 +93,7 @@ public class Agent implements Steppable {
 
         // is the new position still within the county?
         if (world.isInsideUnion(coord))  { 
-        	//cState.county.updateTree(location, translate); 
+        	//cState.county.updateTree(standort_coordinate, translate); 
         	location.apply(translate);
         }
         else // try randomly moving in different direction if trying to stray

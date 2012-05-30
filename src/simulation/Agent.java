@@ -25,18 +25,11 @@ import sim.util.geo.PointMoveTo;
 
 public class Agent implements Steppable {
 
-	final int N = 0;
-	final int NW = 1;
-	final int W = 2;
-	final int SW = 3;
-	final int S = 4;
-	final int SE = 5;
-	final int E = 6;
-	final int NE = 7;
 	int schiffs_id;
 	int direction;
-	Point location = null;
+	Point standort_coordinate = null;
 	double moveRate = 1;
+	int vorgang;
 	Array_Kuerzester_Weg<Double> array_weg;
 	
 	public Agent(int id) {
@@ -44,23 +37,23 @@ public class Agent implements Steppable {
 	}
 
 	public void setLocation(Point p) {
-		location = p;
+		standort_coordinate = p;
 	}
 
 	PointMoveTo pointMoveTo = new PointMoveTo();
 
 	public Geometry getGeometry() {
-		return location;
+		return standort_coordinate;
 	}
 
 	public void step(SimState state) {
 
-		// Simulation testa = (Simulation) state;
-		// GeomVectorField see = testa.see;
+		vorgang=vorgang+1;
+				
+		System.out.println("schiffs_id: "+schiffs_id);
+		Coordinate coord = (Coordinate) standort_coordinate.getCoordinate().clone();
 
-		Coordinate coord = (Coordinate) location.getCoordinate().clone();
-
-		System.out.println("location: "+coord);
+		System.out.println("standort_coordinate: "+coord);
 
 		Coordinate current_ziel = new Coordinate(426.00924507931506,642.3484625419441);
 		
@@ -74,10 +67,9 @@ public class Agent implements Steppable {
 		coord.x=array_weg.get(1, 0);
 		coord.y=array_weg.get(1, 1);
 			
-		System.out.println(array_weg.getNumRows());
-		//current_ziel= 
+		
 			
-		System.out.println(array_weg.getNumRows());	
+		
 		
 	
 		
@@ -133,20 +125,22 @@ public class Agent implements Steppable {
 		// System.out.println(coord);
 		// direction = 0;
 
-		// location.apply(translate);
+		// standort_coordinate.apply(translate);
 
 		// coord.x= coord.x+1;
 
 		// System.out.println(coord);
 		
 		pointMoveTo.setCoordinate(coord);
-		location.apply(pointMoveTo);
+		standort_coordinate.apply(pointMoveTo);
 
 	}
 
+	
+
 	// Coordinate c = new Coordinate(220.00, 249.806314195345024);
 	// if (see.isCovered(coord)) {
-	// //cState.county.updateTree(location, translate);
+	// //cState.county.updateTree(standort_coordinate, translate);
 	//
 	// }
 	// else // try randomly moving in different direction if trying to stray

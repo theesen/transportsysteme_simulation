@@ -97,7 +97,7 @@ public class Agent implements Steppable{
 //    	System.out.println(coord);
     	 // 	direction = 0; 
     	 
-    	// location.apply(translate);
+    	// standort_coordinate.apply(translate);
     	  	
     	  //	coord.x= coord.x+1;
     	         
@@ -114,7 +114,7 @@ public class Agent implements Steppable{
             
 //            Coordinate c = new Coordinate(220.00, 249.806314195345024);
 //    	if (see.isCovered(coord))  { 
-//        	//cState.county.updateTree(location, translate); 
+//        	//cState.county.updateTree(standort_coordinate, translate); 
 //        	
 //        }
 //        else // try randomly moving in different direction if trying to stray
