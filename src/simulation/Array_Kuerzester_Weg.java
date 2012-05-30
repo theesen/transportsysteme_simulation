@@ -1,6 +1,7 @@
 package simulation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Array_Kuerzester_Weg<Type> {
 
@@ -89,4 +90,7 @@ public class Array_Kuerzester_Weg<Type> {
 	{
 		return array.get(row).size();
 	}
+	
+	
+	 
 }

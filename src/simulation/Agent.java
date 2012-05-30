@@ -37,7 +37,8 @@ public class Agent implements Steppable {
 	int direction;
 	Point location = null;
 	double moveRate = 1;
-
+	Array_Kuerzester_Weg<Double> array_weg;
+	
 	public Agent(int id) {
 		schiffs_id = id;
 	}
@@ -65,12 +66,19 @@ public class Agent implements Steppable {
 		
 		System.out.println("Ziel: "+current_ziel);
 		
-		if (coord != current_ziel ){
-			Finde_Kuerzesten_Weg.gbham(coord.x, coord.y, current_ziel.x, current_ziel.y);
-		}
-		else {
-			System.out.println("Angekommen");	
-		}
+		
+			 
+		array_weg=Finde_Kuerzesten_Weg.gbham(coord.x, coord.y, current_ziel.x, current_ziel.y);
+		array_weg.getNumRows();
+		System.out.println(array_weg.getNumRows());
+		coord.x=array_weg.get(1, 0);
+		coord.y=array_weg.get(1, 1);
+			
+		System.out.println(array_weg.getNumRows());
+		//current_ziel= 
+			
+		System.out.println(array_weg.getNumRows());	
+		
 	
 		
 		
@@ -131,7 +139,7 @@ public class Agent implements Steppable {
 
 		// System.out.println(coord);
 		
-		pointMoveTo.setCoordinate(current_ziel);
+		pointMoveTo.setCoordinate(coord);
 		location.apply(pointMoveTo);
 
 	}

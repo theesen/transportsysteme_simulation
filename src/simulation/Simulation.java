@@ -136,6 +136,8 @@ public class Simulation extends SimState {
 	}
 	
 	public static void main (String[] args){
+		
+		
 		doLoop(Simulation.class, args);
 		System.exit(0);
 	}

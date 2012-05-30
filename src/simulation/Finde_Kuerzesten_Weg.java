@@ -12,10 +12,10 @@ package simulation;
 
 public class Finde_Kuerzesten_Weg {
 
-	public static Double[][] Weg_Array = new Double[1000][2];
+	
 	
 		
-	public static void gbham(double xstart,double ystart,double xend,double yend)
+	public static Array_Kuerzester_Weg<Double> gbham(double xstart,double ystart,double xend,double yend)
 	/*--------------------------------------------------------------
 	 * Bresenham-Algorithmus: Linien auf Rastergeräten zeichnen
 	 *
@@ -31,7 +31,7 @@ public class Finde_Kuerzesten_Weg {
 	
 	{
 		
-		 Array_Kuerzester_Weg<Double> array_weg = new Array_Kuerzester_Weg<Double>();
+		Array_Kuerzester_Weg<Double> array_weg = new Array_Kuerzester_Weg<Double>();
 		
 		
 	    double x, y, t, dx, dy, incx, incy, pdx, pdy, ddx, ddy, es, el, err;
@@ -100,8 +100,17 @@ public class Finde_Kuerzesten_Weg {
 	          x += pdx;
 	          y += pdy;
 	      }
+	      
+	      row = array_weg.getNumRows();
+		  array_weg.Add(x, row);
+		  array_weg.Add(y, row);
+	      
 	      SetPixel(x,y);
+	      
+	      
+	      
 	   }
+	return array_weg;
 	} /* gbham() */
 		 
 
