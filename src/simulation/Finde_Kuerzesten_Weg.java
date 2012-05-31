@@ -118,7 +118,7 @@ public class Finde_Kuerzesten_Weg {
 		
 		
 		
-		System.out.println("x: "+x+ " y: "+y);
+		//System.out.println("x: "+x+ " y: "+y);
 		
 		
 	}

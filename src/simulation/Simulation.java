@@ -1,23 +1,20 @@
 package simulation;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 
+import jobs.Schiffsdaten_Auslesen;
 import sim.engine.SimState;
 import sim.field.geo.GeomVectorField;
-import sim.util.Bag;
-import sim.util.geo.GeometryUtilities;
 import sim.util.geo.MasonGeometry;
-import simulation.Agent;
+
 import simulation.GeoToolsImporter;
 import simulation.Simulation;
 
-import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
+
+import daten.Tabelle_Auftrag_Schiffsdaten;
 
 /**
  * @author Patrick
@@ -28,6 +25,12 @@ public class Simulation extends SimState {
 	/**
 	 * 
 	 */
+	public int rowcount;
+	
+	public int columncount;
+	
+	public static Object[][]schiffe_daten_agents= new Object[10][5]; 
+	
 	private Point location;
 	
 	private static final long serialVersionUID = 2499844612548898662L;
@@ -122,11 +125,11 @@ public class Simulation extends SimState {
 	private void addAgents(Point start_point, int schiffs_id){
 		
 			System.out.println("*---------------------------------------------------------*");
-			System.out.println("Neuen Agent erzeugen");
+			System.out.println("Neuen Agent erzeugen für Schiff erzeugt");
 			System.out.println("*---------------------------------------------------------*");
 			
+
 			Agent a = new Agent(schiffs_id);
-			
  		
 			// Location des Agents setzen 
 			a.setLocation(start_point);
@@ -146,12 +149,20 @@ public class Simulation extends SimState {
 		System.out.println("Agenten auf Startpunkt setzten");
 		System.out.println("*---------------------------------------------------------*");
 		
-		Schiffe_Init schiffe_daten_agents = new Schiffe_Init();
-		int schiff_nr = 1;
+		Schiffsdaten_Auslesen.main();
+		Schiffe_Init();
 		
-		for (int i = 0;i<schiffe_daten_agents.getRowCount();i++){
-		addAgents(Schiffe_Init.getPointAt(i),schiff_nr);
-		System.out.println("Schiff hinzugefügt mit Nummer"+schiff_nr);
+		
+		System.out.println("*-------- Wir haben "+ rowcount+" Schiffe------------------------*");
+		
+		int schiff_nr = 0;
+		for (int i = 0;i<rowcount;i++){
+		
+		addAgents(schiffe_daten_agents_getPointAt(i),schiff_nr);
+		
+		
+		System.out.println("Schiff hinzugefügt mit Nummer "+schiff_nr + " Schiffsname: "+  " Heimathafen: " + schiffe_daten_agents[i][1]  );
+		schiff_nr=schiff_nr +1;
 		}
 		
 		
@@ -163,9 +174,76 @@ public class Simulation extends SimState {
 	}
 	
 	public static void main (String[] args){
-		
-		
 		doLoop(Simulation.class, args);
 		System.exit(0);
 	}
+	
+	
+	
+	public void Schiffe_Init() {
+	
+		
+		
+		System.out.println("*---------------------------------------------------------*");
+		System.out.println("Start Schiffe_Init mit Koordinaten");
+		
+		Tabelle_Auftrag_Schiffsdaten table_object_Auftrag_Schiffsdaten = new Tabelle_Auftrag_Schiffsdaten();
+		
+		
+		rowcount = table_object_Auftrag_Schiffsdaten.getRowCount();
+		columncount = table_object_Auftrag_Schiffsdaten.getColumnCount();
+				
+		
+		for (int row = 0; row < rowcount; row++) {
+			for (int col = 0; col < columncount; col++) {
+				schiffe_daten_agents[row][col] = table_object_Auftrag_Schiffsdaten.getValueAt(row, col);		
+			}
+			String hafen = schiffe_daten_agents[row][1].toString();
+			if (hafen.equals("Emd")){
+				schiffe_daten_agents[row][4]=Orte_Koordinaten.getPointAt(0);
+			}else if (hafen.equals("Nor")){
+				schiffe_daten_agents[row][4]=Orte_Koordinaten.getPointAt(2);				
+			}			
+		}
+		
+		
+//		for (Object[] arr : schiffe_daten_agents) {
+//            System.out.println(Arrays.toString(arr));
+//		}
+		
+		System.out.println("*---------------------------------------------------------*");
+		
+		
+		
+		
+		
+
+	}
+	
+	
+	
+	
+	 public static Point schiffe_daten_agents_getPointAt(int row){
+		 Point angeforderter_punkt = null;
+		 angeforderter_punkt = (Point) schiffe_daten_agents[row][4];	 
+		 return angeforderter_punkt;
+	 }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
