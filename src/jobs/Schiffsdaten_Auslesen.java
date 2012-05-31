@@ -16,7 +16,7 @@ public class Schiffsdaten_Auslesen {
 	/**
 	 */
 	public static void main() {
-		// TODO Auto-generated method stub
+		
 
 		
 	String aktuelles_verzeichnis = Datei_Auswaehler.main(new String[] {"schiffe.txt", "Schiffsdaten"});		

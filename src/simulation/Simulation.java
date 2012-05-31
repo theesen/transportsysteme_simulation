@@ -145,8 +145,17 @@ public class Simulation extends SimState {
 		System.out.println("*---------------------------------------------------------*");
 		System.out.println("Agenten auf Startpunkt setzten");
 		System.out.println("*---------------------------------------------------------*");
-		addAgents(Orte_Koordinaten.getPointAt(0),1);
-		addAgents(Orte_Koordinaten.getPointAt(2),2);
+		
+		Schiffe_Init schiffe_daten_agents = new Schiffe_Init();
+		int schiff_nr = 1;
+		
+		for (int i = 0;i<schiffe_daten_agents.getRowCount();i++){
+		addAgents(Schiffe_Init.getPointAt(i),schiff_nr);
+		System.out.println("Schiff hinzugefügt mit Nummer"+schiff_nr);
+		}
+		
+		
+		
 		
 		
 		agents.setMBR(see.getMBR());

@@ -25,7 +25,7 @@ public class Tabelle_Auftrag_Schiffsdaten extends AbstractTableModel{
 		Tabelle_Auftrag_Schiffsdaten.spalten_namen = spalten_namen;
 	}
 
-	public static Object[][] getDatei_array() {
+	public Object[][] getDatei_array() {
 		return datei_array;
 	}
 

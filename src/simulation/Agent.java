@@ -29,7 +29,7 @@ public class Agent implements Steppable {
 	int direction;
 	Point standort_coordinate = null;
 	double moveRate = 1;
-	int vorgang;
+	int vorgang = 0;
 	Array_Kuerzester_Weg<Double> array_weg;
 	
 	public Agent(int id) {
@@ -48,19 +48,17 @@ public class Agent implements Steppable {
 
 	public void step(SimState state) {
 
-		vorgang=vorgang+1;
-				
+		vorgang=vorgang+1;			
+		System.out.println("Vorgang: "+vorgang);		
 		System.out.println("schiffs_id: "+schiffs_id);
-		Coordinate coord = (Coordinate) standort_coordinate.getCoordinate().clone();
-
-		System.out.println("standort_coordinate: "+coord);
-
-		Coordinate current_ziel = new Coordinate(426.00924507931506,642.3484625419441);
 		
+		
+		Coordinate coord = (Coordinate) standort_coordinate.getCoordinate().clone();
+		System.out.println("standort_coordinate: "+coord);
+		Coordinate current_ziel = new Coordinate(426.00924507931506,642.3484625419441);
 		System.out.println("Ziel: "+current_ziel);
 		
-		
-			 
+ 
 		array_weg=Finde_Kuerzesten_Weg.gbham(coord.x, coord.y, current_ziel.x, current_ziel.y);
 		array_weg.getNumRows();
 		System.out.println(array_weg.getNumRows());
