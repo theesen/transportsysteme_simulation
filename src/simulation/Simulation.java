@@ -20,6 +20,7 @@ import simulation_koordinaten.Windpark_C_Koordinaten;
 import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.Point;
 
+import daten.Tabelle_Auftrag_Allgemein;
 import daten.Tabelle_Auftrag_Schiffsdaten;
 
 /**
@@ -62,8 +63,8 @@ public class Simulation extends SimState {
 	public GeomVectorField b_punkte = new GeomVectorField(WIDTH, HEIGHT);
 	
 	public int getNumAgents(){ return NUM_AGENTS;}
+		
 	
-	public void setNumAgents(int a){ if (a>0) NUM_AGENTS = a;}
 	
 	public Simulation(long seed){
 		super (seed);
@@ -126,26 +127,51 @@ public class Simulation extends SimState {
 		}
 	}
 	
-	private void addAgents(Point start_point, int schiffs_id, String geschwindigkeit_revierfahrt, String geschwindigkeit_marschfahrt, String schiffs_name){
+	private void addAgents(){
 		
-			System.out.println("*---------------------------------------------------------*");
-			System.out.println("Neuen Agent erzeugen für Schiff erzeugt");
-			System.out.println("*---------------------------------------------------------*");
 			
 
-			Agent a = new Agent(schiffs_id,geschwindigkeit_revierfahrt,geschwindigkeit_marschfahrt,schiffs_name);
- 		
+			
+			// Schiffe wie in Schiffe.txt angegeben platzieren und Agenten erzeugen 
+			for (int i = 0;i<rowcount;i++)
+			{
+			String schiff_name = 	schiffe_daten_agents[i][0].toString();	
+			String heimathafen = schiffe_daten_agents[i][1].toString();
+			String geschw_revier = 	schiffe_daten_agents[i][2].toString();
+			String geschw_marsch = 	schiffe_daten_agents[i][3].toString();
+	
+			System.out.println("Schiff hinzugefügt mit Nummer "+i + " Schiffsname: "+ schiff_name+ " Heimathafen: " + heimathafen );
+		
+			Agent a = new Agent(i,schiff_name,heimathafen,geschw_revier,geschw_marsch);
+	 		
 			// Location des Agents setzen 
-			a.setLocation(start_point);
+			a.setLocation(schiffe_daten_agents_getPointAt(i));
 			
 
 			agents.addGeometry(new MasonGeometry(a.getGeometry()));
 			schedule.scheduleRepeating(a);
+	
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		
+			
+			
+			System.out.println("*---------------------------------------------------------*");
+			System.out.println("Neuen Agent erzeugen für Schiff erzeugt");
+			System.out.println("*---------------------------------------------------------*");
+			
 	}
 	
 	public void start(){
-		int schiff_nr = 0;
+		
 		
 		super.start();
 		agents.clear();
@@ -158,18 +184,16 @@ public class Simulation extends SimState {
 		
 		Schiffe_Init();
 				
-		Auftraegs_Fahrkarten_Erzeugen.getfahrkarte();
+		Auftragsdaten_Auslesen.main();
 		
+		
+		
+		
+				
 		
 		System.out.println("*-------- Wir haben "+ rowcount+" Schiffe------------------------*");
 		
-		// Schiffe wie in Schiffe.txt angegeben platzieren und Agenten erzeugen 
-		for (int i = 0;i<rowcount;i++)
-		{
-		addAgents(schiffe_daten_agents_getPointAt(i),schiff_nr, schiffe_daten_agents[i][2].toString(),schiffe_daten_agents[i][3].toString(), schiffe_daten_agents[i][0].toString());
-		System.out.println("Schiff hinzugefügt mit Nummer "+schiff_nr + " Schiffsname: "+ schiffe_daten_agents[i][0]+ " Heimathafen: " + schiffe_daten_agents[i][1]  );
-		schiff_nr=schiff_nr +1;
-		}
+		addAgents();
 		
 		agents.setMBR(see.getMBR());
 		
@@ -183,6 +207,9 @@ public class Simulation extends SimState {
 	
 	
 	public void Schiffe_Init() {
+		
+		//TODO Überarbeiten
+		
 		System.out.println("*---------------------------------------------------------*");
 		System.out.println("Start Schiffe_Init mit Koordinaten");
 		
@@ -191,7 +218,7 @@ public class Simulation extends SimState {
 		
 		rowcount = table_object_Auftrag_Schiffsdaten.getRowCount();
 		columncount = table_object_Auftrag_Schiffsdaten.getColumnCount();
-				
+		NUM_AGENTS =rowcount;		
 		
 		for (int row = 0; row < rowcount; row++) {
 			for (int col = 0; col < columncount; col++) {

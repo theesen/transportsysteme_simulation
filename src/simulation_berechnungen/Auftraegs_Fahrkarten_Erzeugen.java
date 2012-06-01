@@ -68,9 +68,9 @@ public class Auftraegs_Fahrkarten_Erzeugen {
 	
 	
 	
-		public static void getfahrkarte(){
+		public static Array_Fahrkarten<Object> getfahrkarte(int Auftragsnummer,int Schiffid, int  Geschwindkeit_revier, int Geschwindkeit_marschfahrt, String Heimathafen){
 		
-		Auftragsdaten_Auslesen.main();
+		
 		
 		// Alle Daten besorgen
 		array_auftrag_allgemein = new Tabelle_Auftrag_Allgemein();
@@ -80,37 +80,49 @@ public class Auftraegs_Fahrkarten_Erzeugen {
 		// Diese Daten sollen übergeben werden
 		// TODO Daten übergeben
 			
-		auftragsnummer = 2;
-		geschwindkeit_revier = 3;
-		geschwindkeit_marschfahrt=12;
-		schiffid = 1;
+		auftragsnummer = Auftragsnummer;
+		geschwindkeit_revier = Geschwindkeit_revier;
+		geschwindkeit_marschfahrt=Geschwindkeit_marschfahrt;
+		schiffid = Schiffid;
+		
+		
 		wartezeit = 0;
 		
 		geschwindkeit = geschwindkeit_revier;
 		
 		System.out.println("*---------------------------------------------------------*");
-		System.out.println("*-----Fahrkarte erzeugen für Auftragsnummer" + auftragsnummer+"----*");
+		System.out.println("Fahrkarte erzeugen für Auftragsnummer " + auftragsnummer);
 		
 
+		// TODO Starthafen falls nicht gleich Heimathafen
 		
-		
-		System.out.println("*---------Starthafen für Auftrag ermitteln----------------*");
+	//	System.out.println("*---------Starthafen für Auftrag ermitteln----------------*");
 				
-		starthafen = array_auftrag_allgemein.getAuftrags_Starthafen(auftragsnummer);
+		//starthafen = array_auftrag_allgemein.getAuftrags_Starthafen(auftragsnummer);
+		starthafen = Heimathafen;
 		endhafen = array_auftrag_allgemein.getAuftrags_Endhafen(auftragsnummer);
 		
-		Orte_Koordinaten.printData();
+		//Orte_Koordinaten.printData();
 		
 		if (starthafen.equals("Emd")) {
 			ziel_point = Orte_Koordinaten.getPointAt(0);
-			
-			// 435,1223322 ,  583,7745277
-			
+					
 			array_fahrkarten.Add( ziel_point.getX(),0);
 			array_fahrkarten.Add( ziel_point.getY(),0);
 			array_fahrkarten.Add( schiffid,0);
 			array_fahrkarten.Add( geschwindkeit,0);
 			array_fahrkarten.Add( wartezeit,0);
+
+			
+			// Weg für Revierfahrt berechnen Emden 1 sm
+			array_weg_berechnung_temporär = Finde_Kuerzesten_Weg.get_kurzen_weg_zwei_punkte(Orte_Koordinaten.getPointAt(0),Sammlung_Berechnungen.Erzeuge_Punkt_aus_Koordinaten(435.1223322,583.7745277));
+			
+			// Wartezeit wieder auf Null setzten
+			wartezeit = 0;
+			
+			row_lenght = array_weg_berechnung_temporär.getNumRows();
+			
+			fuelle_array_fahrkarten();
 			
 			// TODO 1 seemeile weg brechnen
 			
@@ -191,11 +203,13 @@ public class Auftraegs_Fahrkarten_Erzeugen {
 		// Nach hause fahren
 		gohome();
 		
-		array_fahrkarten.printDebugData();
+		//array_fahrkarten.printDebugData();
+		//System.out.println("*---------------------------------------------------------*");
 		
 		
+		return array_fahrkarten;
 		
-		System.out.println("*---------------------------------------------------------*");
+		
 	}
 
 	
@@ -210,10 +224,13 @@ public class Auftraegs_Fahrkarten_Erzeugen {
 		
 	}
 	
+	
+	
+	
 	public static void fuelle_array_fahrkarten(){
 		
 		int reihen = array_fahrkarten.getNumRows();
-		System.out.println("array_fahrkarten row count: "+array_fahrkarten.getNumRows()+" array_weg_berechnung_temporär row count: "+array_weg_berechnung_temporär.getNumRows());
+	//	System.out.println("array_fahrkarten row count: "+array_fahrkarten.getNumRows()+" array_weg_berechnung_temporär row count: "+array_weg_berechnung_temporär.getNumRows());
 		for (int row = 0; row < array_weg_berechnung_temporär.getNumRows(); row++) {
 				
 				array_fahrkarten.Add( array_weg_berechnung_temporär.get(row, 0),reihen);
@@ -226,7 +243,7 @@ public class Auftraegs_Fahrkarten_Erzeugen {
 		
 		}
 		
-		System.out.println("array_fahrkarten row count: "+array_fahrkarten.getNumRows()+" array_weg_berechnung_temporär row count: "+array_weg_berechnung_temporär.getNumRows());
+		//System.out.println("array_fahrkarten row count: "+array_fahrkarten.getNumRows()+" array_weg_berechnung_temporär row count: "+array_weg_berechnung_temporär.getNumRows());
 	}
 	
 	public static void gohome(){

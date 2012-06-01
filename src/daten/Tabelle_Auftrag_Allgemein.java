@@ -95,7 +95,38 @@ public class Tabelle_Auftrag_Allgemein extends AbstractTableModel{
 		            System.out.println("--------------------------");
 		        }
 		   
+		        
+		        public Object[][] getAuftraege_fuer_Heimataufen(String heimathafen)
+				{
+		
+				int numRows = datei_array.length;
+				int numCols = datei_array[0].length;
+				int counter = 0;
+				Boolean auftrags_ausgefuert = false;
+				for (int i=0; i < numRows; i++) {
+					if (datei_array[i][3].toString().equals(heimathafen)){
+						counter = counter+1;				
+					}
+						
+				}	
+				
+				Object[][]result_array = new Object[counter][numCols+1];
+				counter = 0;
+				for (int i=0; i < numRows; i++) {
+					if (datei_array[i][3].toString().equals(heimathafen)){
+						
+					
+	                for (int j=0; j < numCols; j++) {             	
+	                	result_array[counter][j] = datei_array[i][j];
+	                	
+	                }
+	                result_array[counter][5] = auftrags_ausgefuert ;
+	                counter = counter+1;
+	                
+					}
 
-	
+	            }
+	        return result_array;
+				}
 
 }

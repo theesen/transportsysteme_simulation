@@ -162,7 +162,7 @@ public class Test extends SimState {
 			GeometryFactory fact = new GeometryFactory();
 			location = fact.createPoint(new Coordinate(ziel_neu_x,ziel_neu_y));
 			System.out.println("Location: "+location);
-//			MasonGeometry mg = new MasonGeometry(standort_coordinate); 
+//			MasonGeometry mg = new MasonGeometry(standort_koordinate); 
 //            mg.isMovable = true; 
 //            agents.addGeometry(mg);
             

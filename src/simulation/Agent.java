@@ -19,6 +19,7 @@ import sim.engine.Steppable;
 import sim.util.geo.PointMoveTo;
 import simulation_berechnungen.Auftraegs_Fahrkarten_Erzeugen;
 import simulation_berechnungen.Finde_Kuerzesten_Weg;
+import simulation_daten.Array_Auftraege_Status;
 import simulation_daten.Array_Fahrkarten;
 import simulation_daten.Array_Kuerzester_Weg;
 
@@ -30,88 +31,150 @@ public class Agent implements Steppable {
 
 	int schiffs_id;
 	int direction;
-	Point standort_coordinate = null;
+	Point standort_koordinate = null;
 	double moveRate = 1;
 	int vorgang = 0;
-    int geschw_revierfahrt;
-    int geschw_marschfahrt;
-    int current_row = 0; 
-    String schiff_name;
-    
-	Array_Kuerzester_Weg<Double> array_weg;
-	
-	public Agent(int id, String geschwindigkeit_revierfahrt, String geschwindigkeit_marschfahrt, String schiffs_name) {
-		geschw_revierfahrt= Integer.parseInt (geschwindigkeit_revierfahrt);
-		geschw_marschfahrt=Integer.parseInt (geschwindigkeit_marschfahrt);
-		schiff_name=schiffs_name;
+	int geschw_revierfahrt;
+	int geschw_marschfahrt;
+	int current_row = 0;
+	String heimathafen;
+	String schiff_name;
+	Boolean schiff_ist_beschaeftigt = false;
+	Array_Auftraege_Status array_auftraege_status = new Array_Auftraege_Status();
+	Array_Fahrkarten<Object> fahrweg_fahrkarte;
+	int Auftragsnummer;
+	Object frei_auftragsnr;
+	Coordinate coord = new Coordinate();
+
+	public Agent(int id, String schiffs_name, String Heimathafen,
+			String geschwindigkeit_revierfahrt,
+			String geschwindigkeit_marschfahrt) {
+		geschw_revierfahrt = Integer.parseInt(geschwindigkeit_revierfahrt);
+		geschw_marschfahrt = Integer.parseInt(geschwindigkeit_marschfahrt);
+		schiff_name = schiffs_name;
 		schiffs_id = id;
+		heimathafen = Heimathafen;
 	}
 
 	public void setLocation(Point p) {
-		standort_coordinate = p;
+		standort_koordinate = p;
 	}
 
 	PointMoveTo pointMoveTo = new PointMoveTo();
 
 	public Geometry getGeometry() {
-		return standort_coordinate;
+		return standort_koordinate;
 	}
 
 	public void step(SimState state) {
 
-		vorgang=vorgang+1;
-		
-		System.out.println("Vorgang: "+vorgang);		
-		System.out.println("Schiffs Id: "+schiffs_id);
-		System.out.println("Schiffs Name: "+schiff_name);
-		System.out.println("Geschwindigkeit Revierfahrt: "+geschw_revierfahrt);
-		System.out.println("Geschwindigkeit Marschfahrt: "+geschw_marschfahrt);
-		
-		
-		Array_Fahrkarten<Object> test = Auftraegs_Fahrkarten_Erzeugen.getArray_fahrkarten();
-		
-		
-		int rowcount = test.getNumRows()-1;
-		System.out.println("Auftrag hat: "+rowcount);	
-		
-	
-		
-		Coordinate coord = new Coordinate(435.24239312076264,  574.7197300421526);
-		
-		if (current_row != rowcount){
-		coord.x=(Double) test.get(current_row, 0);
-		coord.y =(Double) test.get(current_row, 1);
-		System.out.println("Auftrags koordinate: "+ current_row + " von " +rowcount);	
-		
-		current_row= current_row+1;
-		
-		}
-		
-		
-	//	Coordinate coord = (Coordinate) standort_coordinate.getCoordinate().clone();
-//		System.out.println("standort_coordinate: "+coord);
-//		Coordinate current_ziel = new Coordinate(426.00924507931506,642.3484625419441);
-//		System.out.println("Ziel: "+current_ziel);
-//		
-// 
-//		array_weg=Finde_Kuerzesten_Weg.gbham(coord.x, coord.y, current_ziel.x, current_ziel.y);
-//		array_weg.getNumRows();
-//		
-//		
-//		System.out.println(array_weg.getNumRows());
-//		
-//		coord.x=array_weg.get(1, 0);
-//		coord.y=array_weg.get(1, 1);
+		vorgang = vorgang + 1;
+
+		System.out.println("*---------------------------------------------------------*");
+		System.out.println("Vorgang: " + vorgang + " wird gestartet mit Schiff: " + schiffs_id);
+//		System.out.println("Schiffs Id: " + schiffs_id + " Schiffs Name: "
+//				+ schiff_name + " Heimathafen: " + heimathafen
+//				+ " Geschwindigkeit Revierfahrt: " + geschw_revierfahrt
+//				+ " Geschwindigkeit Marschfahrt: " + geschw_marschfahrt+
+//				" Schiff ist beschaeftigt: " +schiff_ist_beschaeftigt);
+//		System.out.println("*---------------------------------------------------------*");
+
+		if (schiff_ist_beschaeftigt == false) {
+
+			if (heimathafen.equals("Emd")) {
+
+				frei_auftragsnr = Array_Auftraege_Status.get_freie_Auftragsnummer_Emden();
+				
+				if (!frei_auftragsnr.equals(false)) {
+					System.out.println("Schiff hat Auftrag "+ frei_auftragsnr+ " bekommen");
+					fahrweg_fahrkarte = Auftraegs_Fahrkarten_Erzeugen.getfahrkarte((Integer) frei_auftragsnr,schiffs_id, geschw_revierfahrt,geschw_marschfahrt, heimathafen);
+
+					Auftragsnummer = (Integer) frei_auftragsnr;
+					Array_Auftraege_Status.setAuftraege_emden_erledigt(Auftragsnummer);
+					schiff_ist_beschaeftigt = true;	
+				}
+
+			} else if (heimathafen.equals("Nor")) {
+
+				frei_auftragsnr = Array_Auftraege_Status.get_freie_Auftragsnummer_Nordeich();
+
+				if (!frei_auftragsnr.equals(false)) {
+					System.out.println("Schiff hat Auftrag "+ frei_auftragsnr+ " bekommen");
+					fahrweg_fahrkarte = Auftraegs_Fahrkarten_Erzeugen.getfahrkarte((Integer) frei_auftragsnr,schiffs_id, geschw_revierfahrt,geschw_marschfahrt, heimathafen);
+
+					Auftragsnummer = (Integer) frei_auftragsnr;
+					Array_Auftraege_Status.setAuftraege_norddeich_erledigt(Auftragsnummer);
+					schiff_ist_beschaeftigt = true;	
+				}
+				
+			}
 			
+		}	
+
+			if (!frei_auftragsnr.equals(false)) {
+
+				int rowcount = fahrweg_fahrkarte.getNumRows() - 1;
+				//System.out.println("Auftrag hat: " + rowcount + " Schritte");
+
+				
+
+				if (current_row != rowcount) {
+					coord.x = (Double) fahrweg_fahrkarte.get(current_row, 0);
+					coord.y = (Double) fahrweg_fahrkarte.get(current_row, 1);
+					//System.out.println("Auftrags koordinate: " + current_row+ " von " + rowcount);
+					current_row = current_row + 1;
+					
+				} else {
+
+					if (heimathafen.equals("Emd")) {
+						Array_Auftraege_Status
+								.setAuftraege_emden_erledigt((Integer) Auftragsnummer);
+					} else if (heimathafen.equals("Nor")) {
+						Array_Auftraege_Status
+								.setAuftraege_norddeich_erledigt((Integer) Auftragsnummer);
+					}
+
+					schiff_ist_beschaeftigt = false;
+				}
+			} else {
+				
+				System.out.println("Schiff hat keine Auftraeg mehr");
+			}
+
 		
-			
+
+		pointMoveTo.setCoordinate(coord);
+		standort_koordinate.apply(pointMoveTo);
 		
 		
-	
 		
-		
-		
-		//AffineTransformation translate = null;
+		// Array_Fahrkarten<Object> test =
+		// Auftraegs_Fahrkarten_Erzeugen.getArray_fahrkarten();
+		//
+		//
+
+		//
+		// }
+
+		// Coordinate coord = (Coordinate)
+		// standort_koordinate.getCoordinate().clone();
+		// System.out.println("standort_koordinate: "+coord);
+		// Coordinate current_ziel = new
+		// Coordinate(426.00924507931506,642.3484625419441);
+		// System.out.println("Ziel: "+current_ziel);
+		//
+		//
+		// array_weg=Finde_Kuerzesten_Weg.gbham(coord.x, coord.y,
+		// current_ziel.x, current_ziel.y);
+		// array_weg.getNumRows();
+		//
+		//
+		// System.out.println(array_weg.getNumRows());
+		//
+		// coord.x=array_weg.get(1, 0);
+		// coord.y=array_weg.get(1, 1);
+
+		// AffineTransformation translate = null;
 
 		// switch (direction)
 		// {
@@ -161,24 +224,14 @@ public class Agent implements Steppable {
 		// System.out.println(coord);
 		// direction = 0;
 
-		// standort_coordinate.apply(translate);
+		// standort_koordinate.apply(translate);
 
 		// coord.x= coord.x+1;
 
 		// System.out.println(coord);
+
 		
-		pointMoveTo.setCoordinate(coord);
-		standort_coordinate.apply(pointMoveTo);
 
 	}
 
-	
-
-	// Coordinate c = new Coordinate(220.00, 249.806314195345024);
-	// if (see.isCovered(coord)) {
-	// //cState.county.updateTree(standort_coordinate, translate);
-	//
-	// }
-	// else // try randomly moving in different direction if trying to stray
-	//
 }
