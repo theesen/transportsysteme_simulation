@@ -80,10 +80,10 @@ public class Auftraegs_Fahrkarten_Erzeugen {
 		// Diese Daten sollen übergeben werden
 		// TODO Daten übergeben
 			
-		auftragsnummer = 3;
+		auftragsnummer = 2;
 		geschwindkeit_revier = 3;
 		geschwindkeit_marschfahrt=12;
-		schiffid = 4;
+		schiffid = 1;
 		wartezeit = 0;
 		
 		geschwindkeit = geschwindkeit_revier;
@@ -104,7 +104,7 @@ public class Auftraegs_Fahrkarten_Erzeugen {
 		if (starthafen.equals("Emd")) {
 			ziel_point = Orte_Koordinaten.getPointAt(0);
 			
-	
+			// 435,1223322 ,  583,7745277
 			
 			array_fahrkarten.Add( ziel_point.getX(),0);
 			array_fahrkarten.Add( ziel_point.getY(),0);

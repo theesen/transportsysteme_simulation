@@ -11,6 +11,9 @@ package simulation;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.Point;
+
+import sim.display.Console;
+import sim.display.Prefs;
 import sim.engine.SimState;
 import sim.engine.Steppable;
 import sim.util.geo.PointMoveTo;
@@ -70,6 +73,8 @@ public class Agent implements Steppable {
 		
 		int rowcount = test.getNumRows()-1;
 		System.out.println("Auftrag hat: "+rowcount);	
+		
+	
 		
 		Coordinate coord = new Coordinate(435.24239312076264,  574.7197300421526);
 		
