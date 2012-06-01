@@ -17,6 +17,60 @@ public class Tabelle_Auftrag_Auftraege extends AbstractTableModel{
 	public static  String[]spalten_namen= null;
 	
 	
+	
+	
+	
+	public StringBuffer getAuftrag_id_List(){
+		StringBuffer result = new StringBuffer("Die folgenden IDs existieren:\n");
+		for (int i = 0; i < datei_array.length; i++){
+			result.append((Integer) datei_array[i][0] + "; ");
+		}
+		return result;
+	}
+	
+	public String getAuftrag_Location(int auftragsnummer){
+		return (String) datei_array[auftragsnummer][1];
+	}
+	
+	public String getAuftrag_Aufenthaltszeit(int auftragsnummer){
+		return (String) datei_array[auftragsnummer][2];
+	}
+	
+	public Object[][] getAuftragsdaten_fuer_Auftragsnummer(int Autragsnummer)
+			{
+	
+			int numRows = datei_array.length;
+			int numCols = datei_array[0].length;
+			int counter = 0;
+			for (int i=0; i < numRows; i++) {
+				if (datei_array[i][0].toString().equals(String.valueOf(Autragsnummer))){
+					counter = counter+1;				
+				}
+					
+			}	
+			
+			Object[][]result_array = new Object[counter][numCols];
+			counter = 0;
+			for (int i=0; i < numRows; i++) {
+				if (datei_array[i][0].toString().equals(String.valueOf(Autragsnummer))){
+					
+				
+                for (int j=0; j < numCols; j++) {             	
+                	result_array[counter][j] = datei_array[i][j];
+                	
+                }
+                counter = counter+1;
+                
+				}
+
+            }
+        return result_array;
+    
+    
+}
+	
+	
+	
 	public  String[] getSpalten_namen() {
 		return spalten_namen;
 	}

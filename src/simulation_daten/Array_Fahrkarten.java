@@ -1,14 +1,14 @@
-package simulation;
+package simulation_daten;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Array_Kuerzester_Weg<Type> {
+public class Array_Fahrkarten<Type> {
 
 
 	ArrayList<ArrayList<Type>>	array;
  
-	public Array_Kuerzester_Weg()
+	public Array_Fahrkarten()
 	{
 		array = new ArrayList<ArrayList<Type>>();
 	}
@@ -92,5 +92,27 @@ public class Array_Kuerzester_Weg<Type> {
 	}
 	
 	
-	 
+	public Type getlastrow(int col)
+	{
+		return array.get(array.size() - 1).get(col);
+	}
+	
+	public Type setlastrow(int col, Type data )
+	{
+		return array.get(array.size()- 1).set(col,data);
+	}
+	
+	public void printDebugData() {
+        int numRows = getNumRows();
+        int numCols = getNumCols(0);
+
+        for (int i=0; i < numRows; i++) {
+            System.out.print("    row " + i + ":");
+            for (int j=0; j < numCols; j++) {
+                System.out.print("  " + array.get(i).get(j));
+            }
+            System.out.println();
+        }
+        System.out.println("--------------------------");
+    }
 }

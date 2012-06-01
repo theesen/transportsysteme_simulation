@@ -1,10 +1,11 @@
-package simulation;
+package simulation_koordinaten;
 
 import java.util.Arrays;
 import com.vividsolutions.jts.geom.Point;
 
 import sim.util.Bag;
 import sim.util.geo.MasonGeometry;
+import simulation_berechnungen.Get_Right_Koordinaten;
 /**
  * @author Patrick
  * Hier werden alle Koordinaten des Windparks C in ein array geschrieben zusätzlich werden diese noch mithilfe von Get_Right_Koordinate an unsere Karte angepasst bzw. neu berechnet
@@ -14,24 +15,28 @@ public class Orte_Koordinaten {
 	/**
 	 * @param args
 	 */
-	static Object[][]orte_koordinaten= null;     
-	static int anzahl_windraeder ;
-	static int id =0;
+	public static Object[][]orte_koordinaten= null;     
+	public static int anzahl_orte ;
+	public static int id =0;
 	
 	// Konstruktur der Klasse zum füllen des Object Arrays
-	public Orte_Koordinaten(Bag orte_Geometries){
+	public Orte_Koordinaten(){
+		
+		
+	}	
+	public static void Fuelle_Orte_Koordinaten(Bag orte_Geometries)	{
 		
 	if (orte_Geometries.isEmpty()){
 			throw new RuntimeException("Keine Geometrien gefunden!");
 	}	
 	
-	setAnzahl_windraeder( orte_Geometries.objs.length);
+	setAnzahl_orte( orte_Geometries.objs.length);
         
     // Passendes Object Arrays erzeugen
-    orte_koordinaten=new Object[anzahl_windraeder][3];
+    orte_koordinaten=new Object[anzahl_orte][3];
     
     
-    for (int i=0;i < anzahl_windraeder;i++){
+    for (int i=0;i < anzahl_orte;i++){
     	
         // Object auslesen	
 	    MasonGeometry zielpunkt = ((MasonGeometry)orte_Geometries.objs[i]);	
@@ -61,13 +66,13 @@ public class Orte_Koordinaten {
 	}
 
 
-	public static int getAnzahl_windraeder() {
-		return anzahl_windraeder;
+	public static int getAnzahl_orte() {
+		return anzahl_orte;
 	}
 
-	public static void setAnzahl_windraeder(int anzahl_windraeder) {
-		Orte_Koordinaten.anzahl_windraeder = anzahl_windraeder;
-		System.out.println("Anzahl Orte: " + anzahl_windraeder);
+	public static void setAnzahl_orte(int anzahl_orte) {
+		Orte_Koordinaten.anzahl_orte = anzahl_orte;
+		System.out.println("Anzahl Orte: " + anzahl_orte);
 	}
 	
 	
@@ -95,14 +100,14 @@ public class Orte_Koordinaten {
 	 public static Point getPointAt(int ort_nr){
 		 Point angeforderter_punkt = null;
 		 
-		 angeforderter_punkt = (Point) orte_koordinaten[ort_nr][1];
+		 angeforderter_punkt = (Point)orte_koordinaten[ort_nr][1];
 		 
 		 
 		 return angeforderter_punkt;
 	 }
 	 
 		
-	 public void printData() {
+	 public static void printData() {
 		 
 		 
 		 for (Object[] arr :  orte_koordinaten) {

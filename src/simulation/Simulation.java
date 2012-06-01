@@ -3,6 +3,7 @@ package simulation;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 
+import jobs.Auftragsdaten_Auslesen;
 import jobs.Schiffsdaten_Auslesen;
 import sim.engine.SimState;
 import sim.field.geo.GeomVectorField;
@@ -10,6 +11,11 @@ import sim.util.geo.MasonGeometry;
 
 import simulation.GeoToolsImporter;
 import simulation.Simulation;
+import simulation_berechnungen.Auftraegs_Fahrkarten_Erzeugen;
+import simulation_koordinaten.Orte_Koordinaten;
+import simulation_koordinaten.Windpark_A_Koordinaten;
+import simulation_koordinaten.Windpark_B_Koordinaten;
+import simulation_koordinaten.Windpark_C_Koordinaten;
 
 import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.Point;
@@ -112,9 +118,7 @@ public class Simulation extends SimState {
 			new Windpark_A_Koordinaten(a_punkte.getGeometries());
 			new Windpark_B_Koordinaten(b_punkte.getGeometries());
 			new Windpark_C_Koordinaten(c_punkte.getGeometries());
-			new Orte_Koordinaten(orte.getGeometries());
-
-            
+			Orte_Koordinaten.Fuelle_Orte_Koordinaten(orte.getGeometries());
 		}
 		catch(FileNotFoundException ex){
 			System.out.println("Error opening shapefile!"+ex);
@@ -122,14 +126,14 @@ public class Simulation extends SimState {
 		}
 	}
 	
-	private void addAgents(Point start_point, int schiffs_id){
+	private void addAgents(Point start_point, int schiffs_id, String geschwindigkeit_revierfahrt, String geschwindigkeit_marschfahrt, String schiffs_name){
 		
 			System.out.println("*---------------------------------------------------------*");
 			System.out.println("Neuen Agent erzeugen für Schiff erzeugt");
 			System.out.println("*---------------------------------------------------------*");
 			
 
-			Agent a = new Agent(schiffs_id);
+			Agent a = new Agent(schiffs_id,geschwindigkeit_revierfahrt,geschwindigkeit_marschfahrt,schiffs_name);
  		
 			// Location des Agents setzen 
 			a.setLocation(start_point);
@@ -141,33 +145,31 @@ public class Simulation extends SimState {
 	}
 	
 	public void start(){
+		int schiff_nr = 0;
+		
 		super.start();
 		agents.clear();
 		
-		// TODO Hier for i Schleife über Anzahl der Benötigten Schiffen und deren ID + Standort etc..
 		System.out.println("*---------------------------------------------------------*");
 		System.out.println("Agenten auf Startpunkt setzten");
 		System.out.println("*---------------------------------------------------------*");
 		
 		Schiffsdaten_Auslesen.main();
+		
 		Schiffe_Init();
+				
+		Auftraegs_Fahrkarten_Erzeugen.getfahrkarte();
 		
 		
 		System.out.println("*-------- Wir haben "+ rowcount+" Schiffe------------------------*");
 		
-		int schiff_nr = 0;
-		for (int i = 0;i<rowcount;i++){
-		
-		addAgents(schiffe_daten_agents_getPointAt(i),schiff_nr);
-		
-		
-		System.out.println("Schiff hinzugefügt mit Nummer "+schiff_nr + " Schiffsname: "+  " Heimathafen: " + schiffe_daten_agents[i][1]  );
+		// Schiffe wie in Schiffe.txt angegeben platzieren und Agenten erzeugen 
+		for (int i = 0;i<rowcount;i++)
+		{
+		addAgents(schiffe_daten_agents_getPointAt(i),schiff_nr, schiffe_daten_agents[i][2].toString(),schiffe_daten_agents[i][3].toString(), schiffe_daten_agents[i][0].toString());
+		System.out.println("Schiff hinzugefügt mit Nummer "+schiff_nr + " Schiffsname: "+ schiffe_daten_agents[i][0]+ " Heimathafen: " + schiffe_daten_agents[i][1]  );
 		schiff_nr=schiff_nr +1;
 		}
-		
-		
-		
-		
 		
 		agents.setMBR(see.getMBR());
 		
@@ -181,9 +183,6 @@ public class Simulation extends SimState {
 	
 	
 	public void Schiffe_Init() {
-	
-		
-		
 		System.out.println("*---------------------------------------------------------*");
 		System.out.println("Start Schiffe_Init mit Koordinaten");
 		
@@ -212,17 +211,9 @@ public class Simulation extends SimState {
 //		}
 		
 		System.out.println("*---------------------------------------------------------*");
-		
-		
-		
-		
-		
-
 	}
 	
-	
-	
-	
+
 	 public static Point schiffe_daten_agents_getPointAt(int row){
 		 Point angeforderter_punkt = null;
 		 angeforderter_punkt = (Point) schiffe_daten_agents[row][4];	 

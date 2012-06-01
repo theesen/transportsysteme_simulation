@@ -78,21 +78,22 @@ public class SimulationWithGUI extends GUIState{
 		System.out.println(Simulation.NUM_AGENTS);
 		landPortrayal.setPortrayalForAll(new GeomPortrayal(Color.BITMASK,true)); 
 		
-		
-		agentPortrayal.setField(welt.agents);
-		agentPortrayal.setPortrayalForAll(new OvalPortrayal2D(Color.RED, 4.0));
-		
 		ortePortrayal.setField(welt.orte);
         ortePortrayal.setPortrayalForAll(new GeomPortrayal(Color.BLUE,true));
         
+		agentPortrayal.setField(welt.agents);
+		agentPortrayal.setPortrayalForAll(new OvalPortrayal2D(Color.RED, 0.5));
+		
+		
+        
         a_punktePortrayal.setField(welt.a_punkte);
-        a_punktePortrayal.setPortrayalForAll(new GeomPortrayal(Color.ORANGE,true));
+        a_punktePortrayal.setPortrayalForAll(new GeomPortrayal(Color.BLACK,true));
         
         b_punktePortrayal.setField(welt.b_punkte);
-        b_punktePortrayal.setPortrayalForAll(new GeomPortrayal(Color.YELLOW,true));
+        b_punktePortrayal.setPortrayalForAll(new GeomPortrayal(Color.BLACK,true));
 		
         c_punktePortrayal.setField(welt.c_punkte);
-        c_punktePortrayal.setPortrayalForAll(new GeomPortrayal(Color.GREEN,true));
+        c_punktePortrayal.setPortrayalForAll(new GeomPortrayal(Color.BLACK,true));
         //c_punktePortrayal.
         
 		display.reset();

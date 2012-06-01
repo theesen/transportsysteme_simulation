@@ -1,7 +1,11 @@
 /**
  * 
  */
-package simulation;
+package simulation_berechnungen;
+
+import com.vividsolutions.jts.geom.Point;
+
+import simulation_daten.Array_Kuerzester_Weg;
 
 /**
  * @author Patrick / Wiki
@@ -12,6 +16,8 @@ package simulation;
 
 public class Finde_Kuerzesten_Weg {
 
+	
+	
 	
 	
 		
@@ -132,7 +138,16 @@ public class Finde_Kuerzesten_Weg {
 		
 		
 		
+		public static Array_Kuerzester_Weg<Double> get_kurzen_weg_zwei_punkte (Point start_punkt, Point end_punkt){
+			
+			Array_Kuerzester_Weg<Double> array_weg = new Array_Kuerzester_Weg<Double>();
+			
+			
 		
+			array_weg= gbham(start_punkt.getX(),start_punkt.getY(), end_punkt.getX(), end_punkt.getY());
+			
+			return array_weg;
+		}
 		
 		
 		

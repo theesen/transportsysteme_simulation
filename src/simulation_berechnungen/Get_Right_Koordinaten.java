@@ -1,7 +1,9 @@
 /**
  * 
  */
-package simulation;
+package simulation_berechnungen;
+
+import simulation.Simulation;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;

@@ -28,6 +28,31 @@ public class Tabelle_Auftrag_Allgemein extends AbstractTableModel{
 	public static Object[][] getDatei_array() {
 		return datei_array;
 	}
+	
+	
+	
+	
+	public int getAuftragsstartzeit(int auftragsnummer){
+		return (Integer) datei_array[auftragsnummer][2];
+	}
+	
+	public String getAuftrags_Starthafen(int auftragsnummer){
+		return (String) datei_array[auftragsnummer][3];
+	}
+	
+	public String getAuftrags_Endhafen (int auftragsnummer){
+		return (String) datei_array[auftragsnummer][4];
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	public void setDatei_array(Object[][] datei_array) {
 		Tabelle_Auftrag_Allgemein.datei_array = datei_array;

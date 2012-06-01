@@ -14,6 +14,10 @@ import com.vividsolutions.jts.geom.Point;
 import sim.engine.SimState;
 import sim.engine.Steppable;
 import sim.util.geo.PointMoveTo;
+import simulation_berechnungen.Auftraegs_Fahrkarten_Erzeugen;
+import simulation_berechnungen.Finde_Kuerzesten_Weg;
+import simulation_daten.Array_Fahrkarten;
+import simulation_daten.Array_Kuerzester_Weg;
 
 /**
  * @param args
@@ -26,9 +30,17 @@ public class Agent implements Steppable {
 	Point standort_coordinate = null;
 	double moveRate = 1;
 	int vorgang = 0;
+    int geschw_revierfahrt;
+    int geschw_marschfahrt;
+    int current_row = 0; 
+    String schiff_name;
+    
 	Array_Kuerzester_Weg<Double> array_weg;
 	
-	public Agent(int id) {
+	public Agent(int id, String geschwindigkeit_revierfahrt, String geschwindigkeit_marschfahrt, String schiffs_name) {
+		geschw_revierfahrt= Integer.parseInt (geschwindigkeit_revierfahrt);
+		geschw_marschfahrt=Integer.parseInt (geschwindigkeit_marschfahrt);
+		schiff_name=schiffs_name;
 		schiffs_id = id;
 	}
 
@@ -44,22 +56,47 @@ public class Agent implements Steppable {
 
 	public void step(SimState state) {
 
-		vorgang=vorgang+1;			
+		vorgang=vorgang+1;
+		
 		System.out.println("Vorgang: "+vorgang);		
-		System.out.println("schiffs_id: "+schiffs_id);
+		System.out.println("Schiffs Id: "+schiffs_id);
+		System.out.println("Schiffs Name: "+schiff_name);
+		System.out.println("Geschwindigkeit Revierfahrt: "+geschw_revierfahrt);
+		System.out.println("Geschwindigkeit Marschfahrt: "+geschw_marschfahrt);
 		
 		
-		Coordinate coord = (Coordinate) standort_coordinate.getCoordinate().clone();
-		System.out.println("standort_coordinate: "+coord);
-		Coordinate current_ziel = new Coordinate(426.00924507931506,642.3484625419441);
-		System.out.println("Ziel: "+current_ziel);
+		Array_Fahrkarten<Object> test = Auftraegs_Fahrkarten_Erzeugen.getArray_fahrkarten();
 		
- 
-		array_weg=Finde_Kuerzesten_Weg.gbham(coord.x, coord.y, current_ziel.x, current_ziel.y);
-		array_weg.getNumRows();
-		System.out.println(array_weg.getNumRows());
-		coord.x=array_weg.get(1, 0);
-		coord.y=array_weg.get(1, 1);
+		
+		int rowcount = test.getNumRows()-1;
+		System.out.println("Auftrag hat: "+rowcount);	
+		
+		Coordinate coord = new Coordinate(435.24239312076264,  574.7197300421526);
+		
+		if (current_row != rowcount){
+		coord.x=(Double) test.get(current_row, 0);
+		coord.y =(Double) test.get(current_row, 1);
+		System.out.println("Auftrags koordinate: "+ current_row + " von " +rowcount);	
+		
+		current_row= current_row+1;
+		
+		}
+		
+		
+	//	Coordinate coord = (Coordinate) standort_coordinate.getCoordinate().clone();
+//		System.out.println("standort_coordinate: "+coord);
+//		Coordinate current_ziel = new Coordinate(426.00924507931506,642.3484625419441);
+//		System.out.println("Ziel: "+current_ziel);
+//		
+// 
+//		array_weg=Finde_Kuerzesten_Weg.gbham(coord.x, coord.y, current_ziel.x, current_ziel.y);
+//		array_weg.getNumRows();
+//		
+//		
+//		System.out.println(array_weg.getNumRows());
+//		
+//		coord.x=array_weg.get(1, 0);
+//		coord.y=array_weg.get(1, 1);
 			
 		
 			
