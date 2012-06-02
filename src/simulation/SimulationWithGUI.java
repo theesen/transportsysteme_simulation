@@ -31,7 +31,7 @@ public class SimulationWithGUI extends GUIState{
 	GeomVectorFieldPortrayal a_punktePortrayal = new GeomVectorFieldPortrayal();
 	GeomVectorFieldPortrayal b_punktePortrayal = new GeomVectorFieldPortrayal();
 	GeomVectorFieldPortrayal c_punktePortrayal = new GeomVectorFieldPortrayal();
-	
+	static Console_Simulation console;
 	public SimulationWithGUI(SimState state){
 		super(state);
 	}
@@ -117,9 +117,9 @@ public class SimulationWithGUI extends GUIState{
 		
 		SimulationWithGUI SimulationGUI = new SimulationWithGUI();
 		
-		Console_Simulation console = new Console_Simulation(SimulationGUI);
+		console = new Console_Simulation(SimulationGUI);
 		console.setTitle("Console_Simulation");
-		console.setWhenShouldPauseTime(600);
+	//	console.setWhenShouldPauseTime(600);
 		System.out.println("Steps per second " +console.getStepsPerSecond());
 		
 		
@@ -134,6 +134,8 @@ public class SimulationWithGUI extends GUIState{
 		
 	}
 	
+	
+
 	
 
 }
