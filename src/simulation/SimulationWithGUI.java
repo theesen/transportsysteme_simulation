@@ -90,7 +90,7 @@ public class SimulationWithGUI extends GUIState{
         ortePortrayal.setPortrayalForAll(new GeomPortrayal(Color.OPAQUE,true));
         
 		agentPortrayal.setField(welt.agents);
-		agentPortrayal.setPortrayalForAll(new OvalPortrayal2D(Color.RED, 0.5));
+		agentPortrayal.setPortrayalForAll(new OvalPortrayal2D(Color.RED, 0.5,true));
 		
 		
         
@@ -114,6 +114,7 @@ public class SimulationWithGUI extends GUIState{
 	}
 	
 	public static void main (String[] args){
+		
 		SimulationWithGUI SimulationGUI = new SimulationWithGUI();
 		
 		Console_Simulation console = new Console_Simulation(SimulationGUI);

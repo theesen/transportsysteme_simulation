@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import jobs.Auftragsdaten_Auslesen;
 import jobs.Schiffsdaten_Auslesen;
+
 import sim.engine.SimState;
 import sim.field.geo.GeomVectorField;
 import sim.util.geo.MasonGeometry;
@@ -36,11 +37,11 @@ public class Simulation extends SimState {
 	
 	public int columncount;
 	
-	public static Object[][]schiffe_daten_agents= new Object[10][5]; 
+	public static Object[][]schiffe_daten_agents= new Object[100][5]; 
 	
 	private Point location;
 	
-	private static final long serialVersionUID = 2499844612548898662L;
+	private static final long serialVersionUID = -1113018274619047013L;
 	
 	// vergroesserungs_faktor schon mit eingerichtet sonst Width = 12 und Height = 10
 	public static final int WIDTH = 1200; 
@@ -48,7 +49,11 @@ public class Simulation extends SimState {
 	// Um diesen Wert wurde die Karte vergroeßert
 	public static final int vergroesserungs_faktor = 100; 
 	
-	public static int NUM_AGENTS = 1;
+	 // getters and setters for inspectors
+    public int getNumAgents() { return NUM_AGENTS; }
+    public void setNumAgents(int a) { if (a > 0) NUM_AGENTS = a; }
+	
+	public static int NUM_AGENTS = 4;
 	
 	public GeomVectorField see = new GeomVectorField(WIDTH, HEIGHT);
 	
@@ -62,7 +67,7 @@ public class Simulation extends SimState {
 	
 	public GeomVectorField b_punkte = new GeomVectorField(WIDTH, HEIGHT);
 	
-	public int getNumAgents(){ return NUM_AGENTS;}
+	
 		
 	
 	
@@ -135,6 +140,8 @@ public class Simulation extends SimState {
 			// Schiffe wie in Schiffe.txt angegeben platzieren und Agenten erzeugen 
 			for (int i = 0;i<rowcount;i++)
 			{
+				
+			Agent a = null;
 			String schiff_name = 	schiffe_daten_agents[i][0].toString();	
 			String heimathafen = schiffe_daten_agents[i][1].toString();
 			String geschw_revier = 	schiffe_daten_agents[i][2].toString();
@@ -142,15 +149,20 @@ public class Simulation extends SimState {
 	
 			System.out.println("Schiff hinzugefügt mit Nummer "+i + " Schiffsname: "+ schiff_name+ " Heimathafen: " + heimathafen );
 		
-			Agent a = new Agent(i,schiff_name,heimathafen,geschw_revier,geschw_marsch);
-	 		
+			a = new Agent(i,schiff_name,heimathafen,geschw_revier,geschw_marsch);
+			//a = new Agent(random.nextInt(8));
 			// Location des Agents setzen 
 			a.setLocation(schiffe_daten_agents_getPointAt(i));
 			
-
-			agents.addGeometry(new MasonGeometry(a.getGeometry()));
-			schedule.scheduleRepeating(a);
-	
+			 MasonGeometry mg = new MasonGeometry(a.getGeometry()); 
+             mg.isMovable = true; 
+             agents.addGeometry(mg);
+        //     schedule.scheduleRepeating(a);
+			
+			
+//			agents.addGeometry(new MasonGeometry(a.getGeometry()));
+			schedule.scheduleRepeating(1.0,i,a,1.0);
+			
 			}
 			
 			

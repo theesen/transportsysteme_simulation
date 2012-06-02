@@ -8,14 +8,19 @@ package simulation;
  *
  */
 
+import java.util.Random;
+
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.geom.util.AffineTransformation;
+
 
 import sim.display.Console;
 import sim.display.Prefs;
 import sim.engine.SimState;
 import sim.engine.Steppable;
+import sim.field.geo.GeomVectorField;
 import sim.util.geo.PointMoveTo;
 import simulation_berechnungen.Auftraegs_Fahrkarten_Erzeugen;
 import simulation_berechnungen.Finde_Kuerzesten_Weg;
@@ -32,7 +37,7 @@ public class Agent implements Steppable {
 	int schiffs_id;
 	int direction;
 	Point standort_koordinate = null;
-	double moveRate = 1;
+	private static final long serialVersionUID = -1113018274619047013L;
 	int vorgang = 0;
 	int geschw_revierfahrt;
 	int geschw_marschfahrt;
@@ -45,7 +50,11 @@ public class Agent implements Steppable {
 	int Auftragsnummer;
 	Object frei_auftragsnr;
 	Coordinate coord = new Coordinate();
-
+	double moveRate = 100.0;
+	PointMoveTo pointMoveTo = new PointMoveTo();
+	
+	
+	
 	public Agent(int id, String schiffs_name, String Heimathafen,
 			String geschwindigkeit_revierfahrt,
 			String geschwindigkeit_marschfahrt) {
@@ -60,11 +69,12 @@ public class Agent implements Steppable {
 		standort_koordinate = p;
 	}
 
-	PointMoveTo pointMoveTo = new PointMoveTo();
+	
 
 	public Geometry getGeometry() {
 		return standort_koordinate;
 	}
+	
 
 	public void step(SimState state) {
 
@@ -142,96 +152,25 @@ public class Agent implements Steppable {
 			}
 
 		
-
+		System.out.println(coord);	
 		pointMoveTo.setCoordinate(coord);
 		standort_koordinate.apply(pointMoveTo);
 		
-		
-		
-		// Array_Fahrkarten<Object> test =
-		// Auftraegs_Fahrkarten_Erzeugen.getArray_fahrkarten();
-		//
-		//
-
-		//
-		// }
-
-		// Coordinate coord = (Coordinate)
-		// standort_koordinate.getCoordinate().clone();
-		// System.out.println("standort_koordinate: "+coord);
-		// Coordinate current_ziel = new
-		// Coordinate(426.00924507931506,642.3484625419441);
-		// System.out.println("Ziel: "+current_ziel);
-		//
-		//
-		// array_weg=Finde_Kuerzesten_Weg.gbham(coord.x, coord.y,
-		// current_ziel.x, current_ziel.y);
-		// array_weg.getNumRows();
-		//
-		//
-		// System.out.println(array_weg.getNumRows());
-		//
-		// coord.x=array_weg.get(1, 0);
-		// coord.y=array_weg.get(1, 1);
-
-		// AffineTransformation translate = null;
-
-		// switch (direction)
-		// {
-		// case N : // move up
-		// translate = AffineTransformation.translationInstance(0.0, moveRate);
-		// coord.y += moveRate;
-		// break;
-		// case S : // move down
-		// translate = AffineTransformation.translationInstance(0.0, -moveRate);
-		// coord.y -= moveRate;
-		// break;
-		// case E : // move right
-		// translate = AffineTransformation.translationInstance(moveRate, 0.0);
-		// coord.x += moveRate;
-		// break;
-		// case W : // move left
-		// translate = AffineTransformation.translationInstance(-moveRate, 0.0);
-		// coord.x -= moveRate;
-		// break;
-		// case NW : // move upper left
-		// translate =
-		// AffineTransformation.translationInstance(-moveRate,moveRate);
-		// coord.x -= moveRate;
-		// coord.y += moveRate;
-		// System.out.println(coord);
-		// break;
-		// case NE : // move upper right
-		// translate = AffineTransformation.translationInstance( moveRate,
-		// moveRate );
-		// coord.x += moveRate;
-		// coord.y += moveRate;
-		// break;
-		// case SW : // move lower left
-		// translate = AffineTransformation.translationInstance(-moveRate,
-		// -moveRate);
-		// coord.x -= moveRate;
-		// coord.y -= moveRate;
-		// break;
-		// case SE : // move lower right
-		// translate = AffineTransformation.translationInstance( moveRate,
-		// -moveRate);
-		// coord.x += moveRate;
-		// coord.y -= moveRate;
-		// break;
-		// }
-
-		// System.out.println(coord);
-		// direction = 0;
-
-		// standort_koordinate.apply(translate);
-
-		// coord.x= coord.x+1;
-
-		// System.out.println(coord);
-
-		
-
+	
+	
+	
 	}
-
 }
+	
+	
+	
+	
+
+	
+
+
+		
+
+	
+
+

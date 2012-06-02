@@ -159,13 +159,8 @@ public static Object get_freie_Auftragsnummer_Nordeich(){
             }
             
         }
+	
 		
-		
-		
-		
-		
-		
-		auftraege_emden[auftragsnummer][5]=true;;
 	}
 	
 	public String getStartzeit_Nordeich(int auftragsnummer){
