@@ -7,13 +7,7 @@ package simulation_daten;
 
 import java.util.Arrays;
 
-import javax.measure.quantity.Length;
-
-import simulation_berechnungen.StringArrayComparator;
-
-import daten.Auftrag_Allgemein;
 import daten.Tabelle_Auftrag_Allgemein;
-import daten.Tabelle_Auftrag_Schiffsdaten;
 
 
 /**
@@ -93,7 +87,7 @@ public class Array_Auftraege_Status {
 		int startzeit_in_minuten;
 		int numRows = auftraege_emden.length;
 		int newRows = 0;
-		Object auftragsnummer = false;
+		
 		
 		int zaehler = 0;
 		
@@ -125,7 +119,7 @@ public class Array_Auftraege_Status {
 		
 		if (warteliste.length != 0){
 		int ASC = 1; 
-		warteliste=simulation_berechnungen.SortManager.sort(warteliste, new int[]{0,1,2}, new int[]{ASC,ASC,ASC});  
+		warteliste=simulation_daten.Array_Sortier_Manager.sort(warteliste, new int[]{0,1,2}, new int[]{ASC,ASC,ASC});  
 		System.out.println("Warteliste Emden");
 		for (Object[] arr :  warteliste) {
 			
@@ -181,7 +175,7 @@ public class Array_Auftraege_Status {
 		
 		if (warteliste.length != 0){
 			int ASC = 1; 
-			warteliste=simulation_berechnungen.SortManager.sort(warteliste, new int[]{0,1,2}, new int[]{ASC,ASC,ASC});  
+			warteliste=simulation_daten.Array_Sortier_Manager.sort(warteliste, new int[]{0,1,2}, new int[]{ASC,ASC,ASC});  
 			System.out.println("Warteliste Norddeich");
 			for (Object[] arr :  warteliste) {
 				

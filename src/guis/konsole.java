@@ -25,6 +25,22 @@ public class konsole extends JFrame {
         dispFrame.add(scrollingArea, BorderLayout.CENTER);
       //  dispFrame.add(ipField, BorderLayout.SOUTH);
         dispFrame.setSize(new Dimension(500, 400));
+        
+        Rectangle test = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration().getBounds();
+        int höhe = test.height/1;
+        int weite = test.width/4;
+              
+        dispFrame.setLocation(höhe, weite);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         dispFrame.setVisible(true);
         dispFrame.addWindowListener(wAdapt);
         redirectStreams();
@@ -94,7 +110,7 @@ public class konsole extends JFrame {
     public static void out(final String str) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                opArea.setText(opArea.getText()+"\n" + str);
+                opArea.setText(opArea.getText() + str);
             }
         });
     }

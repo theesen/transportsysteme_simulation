@@ -3,6 +3,13 @@
  */
 package simulation_berechnungen;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+
 import jobs.Datei_Report_output;
 import simulation_daten.Array_Auftraege_Status;
 import simulation_daten.Array_Reporting;
@@ -12,6 +19,12 @@ import simulation_daten.Array_Reporting;
  *Auslastung Schiffe (Fahrzeit, Zeit auf See, Zeit im Hafen, sm, Wartezeit)
  */
 public class Reporting_Erzeugen {
+	
+	
+	
+	
+	public static String[] report_output;
+	
 	
 	public static Array_Reporting<Object> report;
 	
@@ -37,7 +50,7 @@ public class Reporting_Erzeugen {
 		
 	}
 	
-	public static void printreport(int aufenthalt_zeit){
+	public static void printreport(int aufenthalt_zeit) throws IOException{
 		
 		int numRows = report.getNumRows();
         int aufenthalts_zeits;
@@ -67,17 +80,70 @@ public class Reporting_Erzeugen {
 		printDebugData();
 		System.out.println("*---------------------------------------------------------*");
 		
+		String aktuelles_verzeichnis = System.getProperty("user.dir")+"\report.txt";  
 		
 		
+		JFileChooser fileChooser = new JFileChooser(aktuelles_verzeichnis); 
+		
+		
+		fileChooser.setFileFilter( new FileFilter()
+	    
+	    
+	    {
+	      @Override public boolean accept( File datei )
+	      {
+	        return datei.isDirectory() ||
+	          datei.getName().toLowerCase().equals("report.txt");
+	      }
+	      @Override public String getDescription()
+	      {
+	        return ".txt";
+	      }
+	    } );
+		
+		String default_filename = "report.txt";
+		fileChooser.setSelectedFile(new File(default_filename));
+		
+		
+		
+		
+		int returnVal = fileChooser.showSaveDialog(null); 
+
+
+		if (returnVal == JFileChooser.APPROVE_OPTION) {  
+		if(fileChooser.getSelectedFile()!=null){  
+		File theFileToSave = fileChooser.getSelectedFile(); 
+		
+		
+		
+		
+		String test = theFileToSave.getPath();
 		
 		Datei_Report_output util = new Datei_Report_output();
-		util.writeLinesToFile("myfile.txt", new String[] {"Line 1", "Line 2", "Line 3"}, true);
 		
 		
 		
 		
 		
+		util.writeLinesToFile(test,report_output, true);
 		
+		
+		
+		if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+			  String cmd = "rundll32 url.dll,FileProtocolHandler " + theFileToSave.getCanonicalPath();
+			  Runtime.getRuntime().exec(cmd);
+			} 
+			else {
+			  Desktop.getDesktop().edit(theFileToSave);
+		}
+		
+		
+		
+		
+		
+		 }}
+		
+//		
 		
 		
 		
@@ -223,6 +289,8 @@ public class Reporting_Erzeugen {
         int numRows = report.getNumRows();
         int numCols = report.getNumCols(0);
         
+        int textfile_line = 0;
+        report_output = new String[numRows];
         
         
         for (int i=0; i < numRows; i++) {
@@ -236,10 +304,13 @@ public class Reporting_Erzeugen {
 			System.out.println("Wartezeit: " +report.get(i,5)+" Minuten");
 			System.out.println("");
 			System.out.println("*---------------------------------------------------------*");
-        	
-            
-		
+			
+			
+			report_output[i] = ""+report.get(i,0)+" | Fahrzeit: " + report.get(i,1)+" Minuten |"+" Zeit auf See: " +report.get(i,2)+" Minuten |"+" Zeit im Hafen: " + report.get(i,3)+" Minuten |"+" Seemeilen: " +	report.get(i,4)+" | Wartezeit: " +report.get(i,5)+" Minuten";
         }
+        
+        
+        
        
     }
 	

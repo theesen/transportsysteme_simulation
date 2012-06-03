@@ -8,6 +8,8 @@ package simulation;
  *
  */
 
+import java.io.IOException;
+
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.Point;
@@ -91,10 +93,10 @@ public class Agent implements Steppable {
 			
 		}
 		if (vorgang == 837){
-			longdebug_nachricht();
+	//		longdebug_nachricht();
 		}
 		// Debug nachricht auswählen
-		longdebug_nachricht();
+	//	longdebug_nachricht();
 		//shortdebug_nachricht();
 		
 		
@@ -125,7 +127,12 @@ public class Agent implements Steppable {
 				if (Reporting_Erzeugen.gucke_ob_alle_reports_fertig_sind() == true){
 					state.finish();
 					
-					Reporting_Erzeugen.printreport(aufenthalt_zeit);
+					try {
+						Reporting_Erzeugen.printreport(aufenthalt_zeit);
+					} catch (IOException e) {
+						System.out.println("Fehler ! Report konnte nicht erzeugt werden");
+						e.printStackTrace();
+					}
 				}
 				
 				
@@ -284,7 +291,7 @@ public class Agent implements Steppable {
 	public void longdebug_nachricht(){
 		int restminuten =  vorgang % 60;
 		int stunden = (vorgang / 60);     
-        System.out.println("Zeit: Stunden: "+stunden+" Minuten: "+restminuten);
+        System.out.println("Zeit: "+stunden+" Stunden "+restminuten+ " Minuten");
 		System.out.println("*---------------------------------------------------------*");
 		
 		System.out.println("Vorgang " + vorgang + " wird gestartet mit Schiff: " + schiffs_id);
