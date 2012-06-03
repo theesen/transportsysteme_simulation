@@ -1,8 +1,6 @@
 package simulation;
 
 
-import guis.konsole;
-
 import java.awt.Color;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
