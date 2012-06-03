@@ -44,7 +44,8 @@ public class Console_Simulation extends Console {
         
         
         outerPane.add(defaults, BorderLayout.SOUTH);
-		tabPane.addTab("Windpark reports", outerPane);
+		tabPane.addTab("Windpark reports", outerPane);//Windparkreport adden
+		
 		
 		
 	}
