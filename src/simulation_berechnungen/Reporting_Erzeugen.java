@@ -3,6 +3,7 @@
  */
 package simulation_berechnungen;
 
+import jobs.Datei_Report_output;
 import simulation_daten.Array_Auftraege_Status;
 import simulation_daten.Array_Reporting;
 
@@ -65,6 +66,27 @@ public class Reporting_Erzeugen {
 		
 		printDebugData();
 		System.out.println("*---------------------------------------------------------*");
+		
+		
+		
+		
+		Datei_Report_output util = new Datei_Report_output();
+		util.writeLinesToFile("myfile.txt", new String[] {"Line 1", "Line 2", "Line 3"}, true);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		
