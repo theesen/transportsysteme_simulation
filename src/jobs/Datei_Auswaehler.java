@@ -20,7 +20,7 @@ static String ausgewaehlte_datei = null;
 		aktuelles_verzeichnis = System.getProperty("user.dir");  
 		
 		  
-	    JFileChooser file_chooser = new JFileChooser(aktuelles_verzeichnis +"/src/main/resources");
+	    JFileChooser file_chooser = new JFileChooser(aktuelles_verzeichnis );
 	    file_chooser.setFileFilter( new FileFilter()
 	    
 	    

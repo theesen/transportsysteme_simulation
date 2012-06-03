@@ -1,11 +1,13 @@
 package simulation;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 
 import jobs.Auftragsdaten_Auslesen;
 import jobs.Schiffsdaten_Auslesen;
 import sim.engine.SimState;
 import sim.field.geo.GeomVectorField;
+import sim.io.geo.ShapeFileImporter;
 import sim.util.geo.MasonGeometry;
 import simulation_berechnungen.Reporting_Erzeugen;
 import simulation_koordinaten.Orte_Koordinaten;
@@ -69,27 +71,39 @@ public class Simulation extends SimState {
 		super (seed);
 		
 		try {
-			GeoToolsImporter importer = new GeoToolsImporter();
-			//ShapeFileImporter importer = new ShapeFileImporter();
+			//GeoToolsImporter importer = new GeoToolsImporter();
+			ShapeFileImporter2 importer = new ShapeFileImporter2();
 			
+			
+			
+			
+			String aktuelles_verzeichnis = System.getProperty("user.dir"); 
+			
+//			File f1 = new File("../ne_50m_admin_0_countries.shp"); 
+//			System.out.println(f1.exists()); 
+			
+			
+			System.out.println(aktuelles_verzeichnis); 
 			 // read in the see Shape file 
-			importer.ingest("../ne_50m_admin_0_countries.shp", Simulation.class, see,null);
+			importer.ingest(aktuelles_verzeichnis+"\\Maps\\ne_50m_admin_0_countries.shp", Simulation.class, see,null);
 			
+			
+				
 			 // read in the orte Shape file 
 			System.out.println("reading orte layer");
-            importer.ingest("../Orte.shp", Simulation.class, orte, null);
+            importer.ingest(aktuelles_verzeichnis+"\\Maps\\Orte.shp", Simulation.class, orte, null);
             
             //read in Windpark A Shape file
             System.out.println("reading a punkte layer");
-            importer.ingest("../A_Punkte.shp", Simulation.class, a_punkte, null);
+            importer.ingest(aktuelles_verzeichnis+"\\Maps\\A_Punkte.shp", Simulation.class, a_punkte, null);
             
             //read in Windpark B Shape file
             System.out.println("reading b punkte layer");
-            importer.ingest("../B_Punkte.shp", Simulation.class, b_punkte, null);
+            importer.ingest(aktuelles_verzeichnis+"\\Maps\\B_Punkte.shp", Simulation.class, b_punkte, null);
 				
             // read in the Windpark C Shape file 
             System.out.println("reading c punkte layer");
-            importer.ingest("../C_Punkte.shp", Simulation.class, c_punkte, null);
+            importer.ingest(aktuelles_verzeichnis+"\\Maps\\C_Punkte.shp", Simulation.class, c_punkte, null);
             
             // MBR zusammen basteln
             Envelope MBR = see.getMBR();
