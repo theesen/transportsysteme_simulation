@@ -36,11 +36,7 @@ public class Init_Gui extends JFrame {
 		pane2.setLayout(new BoxLayout(pane2, BoxLayout.X_AXIS));
 		
 		
-		addAButton("Starte Simulation", pane2, "action1");
-		addAButton("Schiffsdaten laden", pane2, "action2");
-		addAButton("Auftragsdaten laden", pane2, "action3");
-		addAButton("lala", pane2, "action4");
-		addAButton("Beenden", pane2, "action5");
+		
 		
 
 		Gui_Tabellen newContentPane = new Gui_Tabellen();
@@ -121,5 +117,7 @@ public class Init_Gui extends JFrame {
 			}
 		});
 	}
+	
+	
 
 }

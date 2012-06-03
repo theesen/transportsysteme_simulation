@@ -1,6 +1,9 @@
 package simulation;
 
 
+import guis.AWTConsole;
+
+
 import java.awt.Color;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
@@ -117,7 +120,7 @@ public class SimulationWithGUI extends GUIState{
 	public static void main (String[] args){
 		
 		//new konsole("Konsole"); // Konsole auslesen und anzeigen (alles ab hier)
-
+	//	new AWTConsole();
 		SimulationWithGUI SimulationGUI = new SimulationWithGUI();
 		
 		console = new Console_Simulation(SimulationGUI);

@@ -2,12 +2,10 @@ package simulation;
 
 import java.awt.BorderLayout;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
 
 import sim.display.Console;
 import sim.display.GUIState;
@@ -45,6 +43,20 @@ public class Console_Simulation extends Console {
         
         outerPane.add(defaults, BorderLayout.SOUTH);
 		tabPane.addTab("Windpark reports", outerPane);//Windparkreport adden
+		
+		
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		

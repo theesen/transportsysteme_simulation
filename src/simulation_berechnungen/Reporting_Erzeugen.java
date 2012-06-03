@@ -10,7 +10,10 @@ import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
+import daten.Tabelle_Auftrag_Schiffsdaten;
+
 import jobs.Datei_Report_output;
+import simulation_daten.Array_Auftraege_Status;
 import simulation_daten.Array_Reporting;
 
 /**
@@ -57,10 +60,10 @@ public class Reporting_Erzeugen {
         int fahrzeit;
         for (int i=0; i < numRows; i++) {
             
-        	aufenthalts_zeits = (Integer) report.get(i,1);
+        	//aufenthalts_zeits = (Integer) report.get(i,1);
         	zeit_aufsee = (Integer) get_zeit_auf_see(i);
         	
-        	fahrzeit = zeit_aufsee-aufenthalts_zeits;
+        	fahrzeit = zeit_aufsee-aufenthalt_zeit;
         	report.set(i, 1, fahrzeit);
 	
         	
@@ -271,7 +274,7 @@ public class Reporting_Erzeugen {
 		int zeit_auf_see = 0;
 		int zeit_im_hafen = 0;
 		int seemeilen = 0; 
-		int wartezeit = 0;
+		int wartezeit = 1;
 		Boolean fertig = false;
 		String Schiffs_id_string = "Schiffs ID " + Schiffs_id;
 		report.Add(Schiffs_id_string, Schiffs_id)	; //0
@@ -291,11 +294,11 @@ public class Reporting_Erzeugen {
         int textfile_line = 0;
         report_output = new String[numRows];
         
-        
+        Object[][] test = Tabelle_Auftrag_Schiffsdaten.getDatei_array();
         for (int i=0; i < numRows; i++) {
             
         	System.out.println("*---------------"+report.get(i,0)+"--------------------*");
-        	System.out.println("");
+        	System.out.println("Name: "+ test[i][0].toString());
         	System.out.println("Fahrzeit: " + report.get(i,1)+" Minuten");
         	System.out.println("Zeit auf See: " +report.get(i,2)+" Minuten");
         	System.out.println("Zeit im Hafen: " + report.get(i,3)+" Minuten");
@@ -305,7 +308,9 @@ public class Reporting_Erzeugen {
 			System.out.println("*---------------------------------------------------------*");
 			
 			
-			report_output[i] = ""+report.get(i,0)+" | Fahrzeit: " + report.get(i,1)+" Minuten |"+" Zeit auf See: " +report.get(i,2)+" Minuten |"+" Zeit im Hafen: " + report.get(i,3)+" Minuten |"+" Seemeilen: " +	report.get(i,4)+" | Wartezeit: " +report.get(i,5)+" Minuten";
+			
+			
+			report_output[i] = ""+report.get(i,0)+" | Schiffsname: "+ test[i][0].toString()+" | Heimathafen: "+ test[i][1].toString()+" | Fahrzeit: " + report.get(i,1)+" Minuten |"+" Zeit auf See: " +report.get(i,2)+" Minuten |"+" Zeit im Hafen: " + report.get(i,3)+" Minuten |"+" Seemeilen: " +	report.get(i,4)+" | Wartezeit: " +report.get(i,5)+" Minuten";
         }
         
         

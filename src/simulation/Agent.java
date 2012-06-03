@@ -8,6 +8,8 @@ package simulation;
  *
  */
 
+import guis.AWTConsole;
+
 import java.io.IOException;
 
 import sim.engine.SimState;
@@ -55,7 +57,7 @@ public class Agent implements Steppable {
 	Boolean schiff_hat_keinen_auftrag_mehr = false;
 	int umschlags_zeit;
 	int aufenthalt_zeit = 0;
-	
+	int output_cleaner = 0;
 	
 	public Agent(int id, String schiffs_name, String Heimathafen,
 		String geschwindigkeit_revierfahrt,
@@ -81,7 +83,10 @@ public class Agent implements Steppable {
 	public void step(SimState state) {
 
 		vorgang = vorgang + 1;
-		
+	
+	
+	//	AWTConsole.clear();
+	
 		
 
 		
@@ -91,12 +96,12 @@ public class Agent implements Steppable {
 			coord.y=standort_koordinate.getY();		
 			
 		}
-		if (vorgang == 837){
-	//		longdebug_nachricht();
+		if (vorgang == 1738){
+			longdebug_nachricht();
 		}
 		// Debug nachricht auswählen
 	longdebug_nachricht();
-		//shortdebug_nachricht();
+	//	shortdebug_nachricht();
 		
 		
 		gucken_ob_schiff_warten_muss();
@@ -245,8 +250,10 @@ public class Agent implements Steppable {
 			
 		} else {
 			if (heimathafen.equals("Emd")) {
+				akutelle_geschwindigkeit = 0;
 				Array_Auftraege_Status.setAuftraege_emden_erledigt((Integer) Auftragsnummer);
 			} else if (heimathafen.equals("Nor")) {
+				akutelle_geschwindigkeit = 0;
 				Array_Auftraege_Status.setAuftraege_norddeich_erledigt((Integer) Auftragsnummer);
 			}
 
@@ -290,6 +297,10 @@ public class Agent implements Steppable {
 	public void longdebug_nachricht(){
 		int restminuten =  vorgang % 60;
 		int stunden = (vorgang / 60);     
+		
+		
+		
+		
         System.out.println("Zeit: "+stunden+" Stunden "+restminuten+ " Minuten");
 		System.out.println("*---------------------------------------------------------*");
 		
@@ -314,6 +325,7 @@ public class Agent implements Steppable {
 		System.out.println("Zeit im Hafen: " + Reporting_Erzeugen.get_zeit_im_hafen(schiffs_id)+ "min");
 		System.out.println("Zurückgelegte Seemeilen: " +Reporting_Erzeugen.get_seemeilen(schiffs_id)+ "sm");
 		System.out.println("Wartezeit :" + Reporting_Erzeugen.get_wartezeit(schiffs_id));
+		
 		System.out.println("Aufenthaltszeit: "+ aufenthalt_zeit +"min");
 		System.out.println("*---------------------------------------------------------*");
 	}
@@ -321,10 +333,14 @@ public class Agent implements Steppable {
 	
 	
 	public void shortdebug_nachricht(){
-		
-		System.out.println("Vorgang: " + vorgang + " wird gestartet mit Schiff: " + schiffs_id);
-		System.out.println("Auftrags koordinate: " + current_row+ " von " + rowcount);
-		
+		int restminuten =  vorgang % 60;
+		int stunden = (vorgang / 60); 
+
+        System.out.println("Zeit: "+stunden+" Stunden "+restminuten+ " Minuten");
+		System.out.println("*---------------------------------------------------------*");
+		System.out.println("Vorgang " + vorgang + " wird gestartet mit Schiff: " + schiffs_id);
+		System.out.println("Schiff hat Auftrag: "+ frei_auftragsnr+ " bekommen");
+		System.out.println("*---------------------------------------------------------*");
 		
 	}
 	

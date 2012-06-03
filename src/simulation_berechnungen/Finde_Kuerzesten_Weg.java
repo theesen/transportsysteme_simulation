@@ -45,7 +45,8 @@ public class Finde_Kuerzesten_Weg {
 	    
 	    // Neues Array erzeugen
 	   
-	    
+	    System.out.println(xend+ "|"+ xstart+"|" +yend+"|" +
+	    		""+ ystart);
 	    
 	    
 	/* Entfernung in beiden Dimensionen berechnen */

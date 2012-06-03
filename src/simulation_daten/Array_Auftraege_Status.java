@@ -35,13 +35,13 @@ public class Array_Auftraege_Status {
 		
 		//System.out.println(table_object_Auftrag_Schiffsdaten.getRowCount());
 		
-		for (Object[] arr : auftraege_emden) {
-            System.out.println(Arrays.toString(arr));
-		}
-		
-		for (Object[] arr : auftraege_norddeich) {
-            System.out.println(Arrays.toString(arr));
-		}
+//		for (Object[] arr : auftraege_emden) {
+//            System.out.println(Arrays.toString(arr));
+//		}
+//		
+//		for (Object[] arr : auftraege_norddeich) {
+//            System.out.println(Arrays.toString(arr));
+//		}
 		
 		
 	}

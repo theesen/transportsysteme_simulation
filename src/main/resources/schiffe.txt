@@ -1,1 +1,5 @@
 Emma;Emd;3;15;
+Else;Emd;3;14;
+Anne;Nor;2;15;
+Speedy;Nor;3;25;
+Veryslow;Nor;2;10;

@@ -1,5 +1,8 @@
 package simulation;
 
+import gui_komponenten.Gui_Tabellen;
+import guis.Init_Gui;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -210,8 +213,7 @@ public class Simulation extends SimState {
 		
 		Reporting_Erzeugen.report_anlegen();
 		
-		
-		
+		Init_Gui.main();
 		
 				
 		
