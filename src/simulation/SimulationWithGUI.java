@@ -118,7 +118,7 @@ public class SimulationWithGUI extends GUIState{
 	
 	public static void main (String[] args){
 		
-		new konsole("Konsole"); // Konsole auslesen und anzeigen (alles ab hier)
+		//new konsole("Konsole"); // Konsole auslesen und anzeigen (alles ab hier)
 
 		SimulationWithGUI SimulationGUI = new SimulationWithGUI();
 		

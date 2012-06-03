@@ -95,7 +95,7 @@ public class Agent implements Steppable {
 	//		longdebug_nachricht();
 		}
 		// Debug nachricht auswählen
-	//	longdebug_nachricht();
+	longdebug_nachricht();
 		//shortdebug_nachricht();
 		
 		
@@ -231,8 +231,8 @@ public class Agent implements Steppable {
 			// Geschwindigkeit
 			akutelle_geschwindigkeit=(Integer) fahrweg_fahrkarte.get(current_row,3);
 			geschwindigkeit_dauer_fuer_einen_step(); 
-			
-			int seemeile = 1852/926;
+			// TODO in Double umsetzten
+			double seemeile = 0.5;
 			Reporting_Erzeugen.seemeilen(schiffs_id, seemeile);
 			// Wartezeit
 			schiff_muss_warten= schiff_muss_warten +(Integer) fahrweg_fahrkarte.get(current_row,4);
@@ -302,7 +302,7 @@ public class Agent implements Steppable {
 		
 		System.out.println("Schiff muss noch: " +schiff_muss_warten+ " warten");
 		System.out.println("Schiff muss noch: " +umschlags_zeit + " umschlagen");
-		System.out.println("Schiff fährt mit: " +akutelle_geschwindigkeit+ " Seemeilen");
+		System.out.println("Schiff fährt mit: " +akutelle_geschwindigkeit+ " Knoten");
 		
 		System.out.println("Schiff hat Auftrag: "+ frei_auftragsnr+ " bekommen");
 	

@@ -190,9 +190,9 @@ public class Reporting_Erzeugen {
 	}
 	
 	
-	public static void seemeilen(int Schiffs_id, int seemeilen){
+	public static void seemeilen(int Schiffs_id, double seemeilen){
 		
-		seemeilen = seemeilen + (Integer) report.get(Schiffs_id, 4);
+		seemeilen = seemeilen +  Double.parseDouble(report.get(Schiffs_id, 4).toString());
 		
 		report.set(Schiffs_id, 4, seemeilen);
 		//report.printDebugData();	
