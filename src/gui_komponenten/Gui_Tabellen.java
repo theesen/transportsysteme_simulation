@@ -7,21 +7,19 @@ package gui_komponenten;
 
 import guis.Init_Gui;
 
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+
 import javax.swing.BoxLayout;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
 
 import daten.Tabelle_Auftrag_Allgemein;
 import daten.Tabelle_Auftrag_Auftraege;
 import daten.Tabelle_Auftrag_Schiffsdaten;
-
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GridLayout;
 
 /** 
  * Gui_Tabellen is just like SimpleTableDemo, except that it

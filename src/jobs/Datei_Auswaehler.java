@@ -1,7 +1,8 @@
 package jobs;
 
 import java.io.File;
-import javax.swing.*;
+
+import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 /**
 *

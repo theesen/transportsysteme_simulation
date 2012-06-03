@@ -1,26 +1,21 @@
 package simulation;
 
 
+import guis.konsole;
+
 import java.awt.Color;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
-import java.util.prefs.Preferences;
 
 import javax.swing.JFrame;
-import guis.konsole;
 
-import sim.display.Console;
 import sim.display.Controller;
 import sim.display.Display2D;
 import sim.display.GUIState;
-import sim.display.Prefs;
 import sim.engine.SimState;
 import sim.portrayal.geo.GeomPortrayal;
 import sim.portrayal.geo.GeomVectorFieldPortrayal;
 import sim.portrayal.simple.OvalPortrayal2D;
-import simulation.Simulation;
-import simulation.SimulationWithGUI;
-import simulation_berechnungen.Reporting_Erzeugen;
 
 public class SimulationWithGUI extends GUIState{
 	

@@ -1,18 +1,12 @@
 package simulation;
 
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 
 import jobs.Auftragsdaten_Auslesen;
 import jobs.Schiffsdaten_Auslesen;
-
 import sim.engine.SimState;
 import sim.field.geo.GeomVectorField;
 import sim.util.geo.MasonGeometry;
-
-import simulation.GeoToolsImporter;
-import simulation.Simulation;
-import simulation_berechnungen.Auftraegs_Fahrkarten_Erzeugen;
 import simulation_berechnungen.Reporting_Erzeugen;
 import simulation_koordinaten.Orte_Koordinaten;
 import simulation_koordinaten.Windpark_A_Koordinaten;
@@ -22,7 +16,6 @@ import simulation_koordinaten.Windpark_C_Koordinaten;
 import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.Point;
 
-import daten.Tabelle_Auftrag_Allgemein;
 import daten.Tabelle_Auftrag_Schiffsdaten;
 
 /**

@@ -3,17 +3,20 @@
  */
 package guis;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.GridLayout;
-
 import gui_komponenten.Gui_Tabellen;
 
-import javax.swing.*;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import java.awt.*;
-//Event brauchen wir für das Ereigniss, wenn ein Button geklickt wird
-import java.awt.event.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  * @author crossness
@@ -21,13 +24,10 @@ import java.awt.event.*;
  */
 public class Init_Gui extends JFrame {
 
-	private JButton button1;
-	private JButton button2;
-	private JButton button3;
-	private JPanel panelButton;
-	private JLabel oben;
-	private static JLabel anzeige;
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static void addComponentsToPane(Container pane) {
 		
 		pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));

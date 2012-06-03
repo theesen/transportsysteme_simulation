@@ -3,14 +3,10 @@
  */
 package jobs;
 
-import java.util.Arrays;
-
 import javax.swing.JTable;
 
 import daten.Tabelle_Auftrag_Allgemein;
 import daten.Tabelle_Auftrag_Auftraege;
-
-import gui_komponenten.Gui_Tabellen;
 
 /**
  * @author patrick

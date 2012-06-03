@@ -3,9 +3,7 @@
  */
 package jobs;
 
-import daten.Tabelle_Auftrag_Allgemein;
 import daten.Tabelle_Auftrag_Schiffsdaten;
-import gui_komponenten.Gui_Tabellen;
 
 /**
  * @author patrick

@@ -3,9 +3,9 @@
  */
 package simulation_berechnungen;
 
-import com.vividsolutions.jts.geom.Point;
-
 import simulation_daten.Array_Kuerzester_Weg;
+
+import com.vividsolutions.jts.geom.Point;
 
 /**
  * @author Patrick / Wiki

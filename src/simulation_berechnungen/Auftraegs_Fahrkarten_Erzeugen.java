@@ -1,20 +1,18 @@
 package simulation_berechnungen;
 
-import jobs.Auftragsdaten_Auslesen;
-
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.Point;
-
 import simulation_daten.Array_Fahrkarten;
 import simulation_daten.Array_Kuerzester_Weg;
 import simulation_koordinaten.Orte_Koordinaten;
 import simulation_koordinaten.Windpark_A_Koordinaten;
 import simulation_koordinaten.Windpark_B_Koordinaten;
 import simulation_koordinaten.Windpark_C_Koordinaten;
+
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.Point;
+
 import daten.Tabelle_Auftrag_Allgemein;
 import daten.Tabelle_Auftrag_Auftraege;
-import daten.Tabelle_Auftrag_Schiffsdaten;
 
 /**
  * @author Patrick

@@ -1,11 +1,12 @@
 package simulation_koordinaten;
 
 import java.util.Arrays;
-import com.vividsolutions.jts.geom.Point;
 
 import sim.util.Bag;
 import sim.util.geo.MasonGeometry;
 import simulation_berechnungen.Get_Right_Koordinaten;
+
+import com.vividsolutions.jts.geom.Point;
 /**
  * @author Patrick
  * Hier werden alle Koordinaten des Windparks C in ein array geschrieben zusätzlich werden diese noch mithilfe von Get_Right_Koordinate an unsere Karte angepasst bzw. neu berechnet

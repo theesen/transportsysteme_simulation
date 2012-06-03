@@ -11,7 +11,6 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
 import jobs.Datei_Report_output;
-import simulation_daten.Array_Auftraege_Status;
 import simulation_daten.Array_Reporting;
 
 /**

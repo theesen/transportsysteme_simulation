@@ -1,7 +1,6 @@
 package simulation_daten;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Array_Kuerzester_Weg<Type> {
 

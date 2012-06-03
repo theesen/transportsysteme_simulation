@@ -7,14 +7,15 @@ See the file "LICENSE" for more information
 */
 package simulation; 
 
-import sim.field.geo.GeomVectorField;
-import sim.io.geo.GeomImporter;
-import sim.util.Bag;
-
 import java.io.File;
-import java.io.Serializable; 
-import java.io.FileNotFoundException; 
-import java.util.*; 
+import java.io.FileNotFoundException;
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
 import org.geotools.data.FeatureSource;
@@ -27,10 +28,13 @@ import org.opengis.feature.type.AttributeType;
 import org.opengis.filter.BinaryComparisonOperator;
 import org.opengis.filter.Filter;
 
-import com.vividsolutions.jts.geom.Geometry; 
-
+import sim.field.geo.GeomVectorField;
+import sim.io.geo.GeomImporter;
+import sim.util.Bag;
 import sim.util.geo.AttributeField;
 import sim.util.geo.MasonGeometry;
+
+import com.vividsolutions.jts.geom.Geometry;
 
 /** 
     Use the GeoTools Java API to read geospatial data into the GeomVectorField.
