@@ -3,6 +3,10 @@
  */
 package daten;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -44,7 +48,19 @@ public class Tabelle_Auftrag_Allgemein extends AbstractTableModel{
 		return (String) datei_array[auftragsnummer][4];
 	}
 	
-	
+	public int get_Startzeit (int auftragsnummer){
+		
+				
+		String time = (String) datei_array[auftragsnummer][2];
+		String[] split = time.split("\\:");
+		
+		int double_time_in_mins = 60*Integer.valueOf(split[0] ) + Integer.valueOf(split[1]);
+
+		
+		
+		
+		return double_time_in_mins ;
+	}
 	
 	
 	

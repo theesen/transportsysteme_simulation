@@ -107,12 +107,32 @@ public class Array_Reporting<Type> {
         int numCols = getNumCols(0);
 
         for (int i=0; i < numRows; i++) {
-            System.out.print("    row " + i + ":");
+            System.out.print("row " + i + ":");
             for (int j=0; j < numCols; j++) {
-                System.out.print("  " + array.get(i).get(j));
+                System.out.print(" | " + array.get(i).get(j));
             }
             System.out.println();
         }
-        System.out.println("--------------------------");
+       
     }
+	
+	
+	
+        
+        
+        
+        
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

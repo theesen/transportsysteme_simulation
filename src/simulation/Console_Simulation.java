@@ -1,6 +1,13 @@
 package simulation;
 
+import java.awt.BorderLayout;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 import sim.display.Console;
 import sim.display.GUIState;
@@ -16,6 +23,28 @@ public class Console_Simulation extends Console {
 		JLabel sliderText = null;
 		sliderText = new JLabel("0.0");
 		sliderText.setText("" + ((double) (speed)) / 1000);
+		
+		JTabbedPane tabPane = getTabPane();
+		JPanel outerPane = new JPanel();
+        outerPane.setLayout(new BorderLayout());
+        
+        
+        
+        
+        Box defaults = new Box(BoxLayout.X_AXIS);
+        defaults.add(new JLabel(" Save as Defaults for "));
+        JButton appPreferences = new JButton("Simulation");
+        JButton systemPreferences = new JButton("MASON");
+        defaults.add(appPreferences);
+        defaults.add(systemPreferences);
+        defaults.add(Box.createGlue());
+        
+        
+        
+        
+        
+        outerPane.add(defaults, BorderLayout.SOUTH);
+		tabPane.addTab("Windpark reports", outerPane);
 		
 		
 	}

@@ -97,7 +97,7 @@ public class Auftraegs_Fahrkarten_Erzeugen {
 		// TODO Starthafen falls nicht gleich Heimathafen
 		
 	//	System.out.println("*---------Starthafen für Auftrag ermitteln----------------*");
-				
+		System.out.println(Orte_Koordinaten.getAnzahl_orte());
 		//starthafen = array_auftrag_allgemein.getAuftrags_Starthafen(auftragsnummer);
 		starthafen = Heimathafen;
 		endhafen = array_auftrag_allgemein.getAuftrags_Endhafen(auftragsnummer);
@@ -106,13 +106,13 @@ public class Auftraegs_Fahrkarten_Erzeugen {
 		
 		if (starthafen.equals("Emd")) {
 			ziel_point = Orte_Koordinaten.getPointAt(0);
-					
+		
 			array_fahrkarten.Add( ziel_point.getX(),0);
 			array_fahrkarten.Add( ziel_point.getY(),0);
 			array_fahrkarten.Add( schiffid,0);
 			array_fahrkarten.Add( geschwindkeit,0);
-			array_fahrkarten.Add( wartezeit,0);
-
+			//array_fahrkarten.Add( array_auftrag_allgemein.get_Startzeit(auftragsnummer),0	);
+			array_fahrkarten.Add( wartezeit,0	);
 			
 			// Weg für Revierfahrt berechnen Emden 1 sm
 			array_weg_berechnung_temporär = Finde_Kuerzesten_Weg.get_kurzen_weg_zwei_punkte(Orte_Koordinaten.getPointAt(0),Sammlung_Berechnungen.Erzeuge_Punkt_aus_Koordinaten(435.1223322,583.7745277));
@@ -133,8 +133,8 @@ public class Auftraegs_Fahrkarten_Erzeugen {
 			array_fahrkarten.Add( ziel_point.getY(),0);
 			array_fahrkarten.Add( schiffid,0);
 			array_fahrkarten.Add( geschwindkeit,0);
-			array_fahrkarten.Add( wartezeit,0);
-			
+			//array_fahrkarten.Add(  array_auftrag_allgemein.get_Startzeit(auftragsnummer),0);
+			array_fahrkarten.Add(  wartezeit,0);
 			// Weg für Revierfahrt berechnen Norddeich
 			array_weg_berechnung_temporär = Finde_Kuerzesten_Weg.get_kurzen_weg_zwei_punkte(Orte_Koordinaten.getPointAt(2),Orte_Koordinaten.getPointAt(1));
 			
@@ -279,7 +279,7 @@ public class Auftraegs_Fahrkarten_Erzeugen {
 			set_aktuelle_position();
 			
 			// WarteZeit setzten
-			array_fahrkarten.setlastrow(4, 30);
+			//array_fahrkarten.setlastrow(4, 30);
 			
 			
 		}

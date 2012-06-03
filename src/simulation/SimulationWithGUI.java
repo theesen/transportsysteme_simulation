@@ -2,6 +2,7 @@ package simulation;
 
 import java.awt.Color;
 import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
 import java.util.prefs.Preferences;
 
 import javax.swing.JFrame;
@@ -18,6 +19,7 @@ import sim.portrayal.geo.GeomVectorFieldPortrayal;
 import sim.portrayal.simple.OvalPortrayal2D;
 import simulation.Simulation;
 import simulation.SimulationWithGUI;
+import simulation_berechnungen.Reporting_Erzeugen;
 
 public class SimulationWithGUI extends GUIState{
 	
@@ -122,13 +124,13 @@ public class SimulationWithGUI extends GUIState{
 	//	console.setWhenShouldPauseTime(600);
 		System.out.println("Steps per second " +console.getStepsPerSecond());
 		
+		// Größe Console berechnen
+		Rectangle test = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration().getBounds();
+		int höhe = test.height/3;
+		int weite = test.width/3;
 		
-
-		
-		
-		
-		
-		
+		console.setSize(weite, höhe);
+		//console.setLocation(0,0);
 		
 		console.setVisible(true);
 		

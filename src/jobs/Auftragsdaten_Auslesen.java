@@ -38,7 +38,7 @@ public class Auftragsdaten_Auslesen {
 		System.out.println("Anzahl der Tabellenreihen: "
 				+ datei_array_auftrag_allgemein.length + "\n");
 		System.out.println("Anzahl der Tabellenspalten: "
-				+ datei_array_auftrag_allgemein[1].length + "\n");
+				+ datei_array_auftrag_allgemein[0].length + "\n");
 
 		// Reihen nummerieren und die erste 4 spalten in ein eigenes array
 		// schreiben

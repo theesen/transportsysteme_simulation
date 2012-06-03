@@ -13,6 +13,7 @@ import sim.util.geo.MasonGeometry;
 import simulation.GeoToolsImporter;
 import simulation.Simulation;
 import simulation_berechnungen.Auftraegs_Fahrkarten_Erzeugen;
+import simulation_berechnungen.Reporting_Erzeugen;
 import simulation_koordinaten.Orte_Koordinaten;
 import simulation_koordinaten.Windpark_A_Koordinaten;
 import simulation_koordinaten.Windpark_B_Koordinaten;
@@ -33,7 +34,7 @@ public class Simulation extends SimState {
 	/**
 	 * 
 	 */
-	public int rowcount;
+	public int schiffs_rowcount;
 	
 	public int columncount;
 	
@@ -138,8 +139,9 @@ public class Simulation extends SimState {
 
 			
 			// Schiffe wie in Schiffe.txt angegeben platzieren und Agenten erzeugen 
-			for (int i = 0;i<rowcount;i++)
+			for (int i = 0;i<schiffs_rowcount;i++)
 			{
+				
 				
 			Agent a = null;
 			String schiff_name = 	schiffe_daten_agents[i][0].toString();	
@@ -159,6 +161,7 @@ public class Simulation extends SimState {
              agents.addGeometry(mg);
         //     schedule.scheduleRepeating(a);
 			
+            Reporting_Erzeugen.add_schiffe(i);
 			
 //			agents.addGeometry(new MasonGeometry(a.getGeometry()));
 			schedule.scheduleRepeating(1.0,i,a,1.0);
@@ -198,12 +201,14 @@ public class Simulation extends SimState {
 				
 		Auftragsdaten_Auslesen.main();
 		
+		Reporting_Erzeugen.report_anlegen();
+		
 		
 		
 		
 				
 		
-		System.out.println("*-------- Wir haben "+ rowcount+" Schiffe------------------------*");
+		System.out.println("*-------- Wir haben "+ schiffs_rowcount+" Schiffe------------------------*");
 		
 		addAgents();
 		
@@ -228,11 +233,11 @@ public class Simulation extends SimState {
 		Tabelle_Auftrag_Schiffsdaten table_object_Auftrag_Schiffsdaten = new Tabelle_Auftrag_Schiffsdaten();
 		
 		
-		rowcount = table_object_Auftrag_Schiffsdaten.getRowCount();
+		schiffs_rowcount = table_object_Auftrag_Schiffsdaten.getRowCount();
 		columncount = table_object_Auftrag_Schiffsdaten.getColumnCount();
-		NUM_AGENTS =rowcount;		
+		NUM_AGENTS =schiffs_rowcount;		
 		
-		for (int row = 0; row < rowcount; row++) {
+		for (int row = 0; row < schiffs_rowcount; row++) {
 			for (int col = 0; col < columncount; col++) {
 				schiffe_daten_agents[row][col] = table_object_Auftrag_Schiffsdaten.getValueAt(row, col);		
 			}

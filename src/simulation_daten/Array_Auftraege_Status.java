@@ -3,13 +3,18 @@
  */
 package simulation_daten;
 
+
+
 import java.util.Arrays;
 
 import javax.measure.quantity.Length;
 
+import simulation_berechnungen.StringArrayComparator;
+
 import daten.Auftrag_Allgemein;
 import daten.Tabelle_Auftrag_Allgemein;
 import daten.Tabelle_Auftrag_Schiffsdaten;
+
 
 /**
  * @author crossness
@@ -83,44 +88,126 @@ public class Array_Auftraege_Status {
 	
 	
 	
-	public static Object get_freie_Auftragsnummer_Emden(){
+	public static Object get_freie_Auftragsnummer_Emden(int aktuelle_uhrzeit){
 		
-		
+		int startzeit_in_minuten;
 		int numRows = auftraege_emden.length;
-        int numCols = auftraege_emden[0].length;
-        Object auftragsnummer = false;  
-        
-        for (int i=0; i < numRows; i++) {
-            
-            if(auftraege_emden[i][5].equals(false)){
-            	return (Object) auftraege_emden[i][0]; 	
-            }
-            
-        }
-       
+		int newRows = 0;
+		Object auftragsnummer = false;
+		
+		int zaehler = 0;
+		
+		for (int i = 0; i < numRows; i++) {
+		if (auftraege_emden[i][5].equals(false)) {
+			newRows = newRows+1;
+		}
+		}
+		
+		
+		
+		String[][] warteliste = new String[newRows][2];
+		
+		
+		for (int i = 0; i < numRows; i++) {
 
-		return (Object) auftragsnummer;
+		if (auftraege_emden[i][5].equals(false)) {	
+				
+				String startzeit = (String) auftraege_emden[i][2];
+				String[] split = startzeit.split("\\:");
+				startzeit_in_minuten = 60 * Integer.valueOf(split[0])+ Integer.valueOf(split[1]);
+				warteliste[zaehler][0] = String.valueOf(startzeit_in_minuten);
+				warteliste[zaehler][1] = String.valueOf(auftraege_emden[i][0]);
+				zaehler = zaehler +1;
+				}
+		}
+		
+		
+		
+		if (warteliste.length != 0){
+		int ASC = 1; 
+		warteliste=simulation_berechnungen.SortManager.sort(warteliste, new int[]{0,1,2}, new int[]{ASC,ASC,ASC});  
+		System.out.println("Warteliste Emden");
+		for (Object[] arr :  warteliste) {
+			
+            System.out.println(Arrays.toString(arr));
+		}
+		
+		
+		if(Integer.valueOf(warteliste[0][0])<= aktuelle_uhrzeit){
+			
+			return Integer.valueOf(warteliste[0][1]);
+		}else{
+			return (Object) "Warten";
+		}
+			
+		}else
+		{
+	
+		return (Object) false;
+		}
 	}
 	
 	
-public static Object get_freie_Auftragsnummer_Nordeich(){
+	public static Object get_freie_Auftragsnummer_Norddeich(int aktuelle_uhrzeit){
 		
-		
+		int startzeit_in_minuten;
 		int numRows = auftraege_norddeich.length;
-        int numCols = auftraege_norddeich[0].length;
-        Object auftragsnummer = false;  
-        
-        for (int i=0; i < numRows; i++) {
-            
-            if(auftraege_norddeich[i][5].equals(false)){
-            	return (Object) auftraege_norddeich[i][0]; 	
-            }
-            
-        }
-       
+		int newRows = 0;
+		Object auftragsnummer = false;
+		
+		int zaehler = 0;
+		
+		for (int i = 0; i < numRows; i++) {
+		if (auftraege_norddeich[i][5].equals(false)) {
+			newRows = newRows+1;
+		}
+		}
+		
+	
+		String[][] warteliste = new String[newRows][2];
+		
+		for (int i = 0; i < numRows; i++) {
 
-		return (Object) auftragsnummer;
+		if (auftraege_norddeich[i][5].equals(false)) {	
+				
+				String startzeit = (String) auftraege_norddeich[i][2];
+				String[] split = startzeit.split("\\:");
+				startzeit_in_minuten = 60 * Integer.valueOf(split[0])+ Integer.valueOf(split[1]);
+				warteliste[zaehler][0] = String.valueOf(startzeit_in_minuten);
+				warteliste[zaehler][1] = String.valueOf(auftraege_norddeich[i][0]);
+				zaehler = zaehler +1;
+				}
+		}
+		
+		if (warteliste.length != 0){
+			int ASC = 1; 
+			warteliste=simulation_berechnungen.SortManager.sort(warteliste, new int[]{0,1,2}, new int[]{ASC,ASC,ASC});  
+			System.out.println("Warteliste Norddeich");
+			for (Object[] arr :  warteliste) {
+				
+	            System.out.println(Arrays.toString(arr));
+			}
+			
+			
+			if(Integer.valueOf(warteliste[0][0])<= aktuelle_uhrzeit){
+				return Integer.valueOf(warteliste[0][1]);
+			}else{
+				return (Object) "Warten";
+			}
+				
+			}else
+			{
+		
+			return (Object) false;
+			}
 	}
+	
+	
+	
+	
+	
+	
+
 	
 	
 	
@@ -178,4 +265,18 @@ public static Object get_freie_Auftragsnummer_Nordeich(){
 	public String getEndhafen_Emden(int auftragsnummer){
 		return (String) auftraege_norddeich[auftragsnummer][4];
 	}
+	
+	public static int getNumRows()
+	{
+		int size = 0;
+		size = auftraege_emden.length + auftraege_norddeich.length;
+		
+		return size;
+	}
+ 
+	public static int getNumCols()
+	{
+		return auftraege_emden[0].length;
+	}
+	
 }
