@@ -1,12 +1,13 @@
 package simulation;
 
+
 import java.awt.Color;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.util.prefs.Preferences;
 
 import javax.swing.JFrame;
-
+import guis.konsole;
 
 import sim.display.Console;
 import sim.display.Controller;
@@ -22,6 +23,11 @@ import simulation.SimulationWithGUI;
 import simulation_berechnungen.Reporting_Erzeugen;
 
 public class SimulationWithGUI extends GUIState{
+	
+	
+	
+	
+	
 	
 	Display2D display;
 	JFrame displayFrame;
@@ -117,6 +123,8 @@ public class SimulationWithGUI extends GUIState{
 	
 	public static void main (String[] args){
 		
+		new konsole("Konsole"); // Konsole auslesen und anzeigen (alles ab hier)
+
 		SimulationWithGUI SimulationGUI = new SimulationWithGUI();
 		
 		console = new Console_Simulation(SimulationGUI);
