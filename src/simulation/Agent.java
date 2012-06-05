@@ -24,6 +24,7 @@ import simulation_koordinaten.Orte_Koordinaten;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.geom.util.AffineTransformation;
 
 /**
  * @param args
@@ -118,6 +119,7 @@ public class Agent implements Steppable {
 					
 				} else {
 					geschwindigkeit_in_minuten = geschwindigkeit_in_minuten - 1;
+					
 				}
 
 			} else {
@@ -125,14 +127,14 @@ public class Agent implements Steppable {
 				if (schiff_hat_keinen_auftrag_mehr == false && !frei_auftragsnr.equals("Warten")) {
 					schiff_hat_keinen_auftrag_mehr = true;
 					
-					Reporting_Erzeugen.set_gesamt_zeit(schiffs_id,vorgang); // Gesamtzeit setzten
+					Reporting_Erzeugen.set_gesamt_zeit(schiffs_id,vorgang,aufenthalt_zeit); // Gesamtzeit setzten
 				}
 				
 				if (Reporting_Erzeugen.gucke_ob_alle_reports_fertig_sind() == true){
 					state.finish();
 					
 					try {
-						Reporting_Erzeugen.printreport(aufenthalt_zeit);
+						Reporting_Erzeugen.printreport();
 					} catch (IOException e) {
 						System.out.println("Fehler ! Report konnte nicht erzeugt werden");
 						e.printStackTrace();
@@ -349,11 +351,11 @@ public class Agent implements Steppable {
 	public void bewege_dich(){
 		
 		
-		
+		AffineTransformation translate = null;
 		pointMoveTo.setCoordinate(coord);
 		standort_koordinate.apply(pointMoveTo);
-		
-		
+//		translate = AffineTransformation.translationInstance(coord.x ,coord.y);
+//		standort_koordinate.apply(translate);
 	}
 	
 	
@@ -365,7 +367,7 @@ public class Agent implements Steppable {
 //		zeit = ;
 //		System.out.println(zeit);
 		geschwindigkeit_in_minuten =(int) Math.round(zeit);
-		geschwindigkeit_in_minuten = geschwindigkeit_in_minuten +1;
+		geschwindigkeit_in_minuten = geschwindigkeit_in_minuten-1;
 	}
 	
 	

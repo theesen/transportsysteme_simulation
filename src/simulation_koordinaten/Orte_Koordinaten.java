@@ -33,10 +33,10 @@ public class Orte_Koordinaten {
 			throw new RuntimeException("Keine Geometrien gefunden!");
 	}	
 	
-	setAnzahl_orte( orte_Geometries.objs.length);
-        
+	//setAnzahl_orte( orte_Geometries.objs.length);
+    
     // Passendes Object Arrays erzeugen
-    orte_koordinaten=new Object[anzahl_orte][3];
+    orte_koordinaten=new Object[7][3];
     
     
    // for (int i=0;i < anzahl_orte;i++){

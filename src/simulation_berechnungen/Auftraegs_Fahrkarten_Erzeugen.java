@@ -113,14 +113,37 @@ public class Auftraegs_Fahrkarten_Erzeugen {
 			array_fahrkarten.Add( wartezeit,0	);
 			
 			// Weg für Revierfahrt berechnen Emden 1 sm
-			array_weg_berechnung_temporär = Finde_Kuerzesten_Weg.get_kurzen_weg_zwei_punkte(Orte_Koordinaten.getPointAt(0),Sammlung_Berechnungen.Erzeuge_Punkt_aus_Koordinaten(435.1223322,583.7745277));
+			array_weg_berechnung_temporär = Finde_Kuerzesten_Weg.get_kurzen_weg_zwei_punkte(Orte_Koordinaten.getPointAt(0),Orte_Koordinaten.getPointAt(3));
 			
 			// Wartezeit wieder auf Null setzten
 			wartezeit = 0;
-			
 			row_lenght = array_weg_berechnung_temporär.getNumRows();
-			
 			fuelle_array_fahrkarten();
+			set_aktuelle_position();
+			geschwindkeit=geschwindkeit_marschfahrt;
+			// Weg für Revierfahrt berechnen Emden 1 sm
+			array_weg_berechnung_temporär = Finde_Kuerzesten_Weg.get_kurzen_weg_zwei_punkte(current_point,Orte_Koordinaten.getPointAt(4));
+			wartezeit = 0;
+			row_lenght = array_weg_berechnung_temporär.getNumRows();
+			fuelle_array_fahrkarten();
+			set_aktuelle_position();
+			// Weg für Revierfahrt berechnen Emden 1 sm
+			array_weg_berechnung_temporär = Finde_Kuerzesten_Weg.get_kurzen_weg_zwei_punkte(current_point,Orte_Koordinaten.getPointAt(5));
+			wartezeit = 0;
+			row_lenght = array_weg_berechnung_temporär.getNumRows();
+			fuelle_array_fahrkarten();
+			set_aktuelle_position();
+			// Weg für Revierfahrt berechnen Emden 1 sm
+			array_weg_berechnung_temporär = Finde_Kuerzesten_Weg.get_kurzen_weg_zwei_punkte(current_point,Orte_Koordinaten.getPointAt(6));
+			wartezeit = 0;
+			row_lenght = array_weg_berechnung_temporär.getNumRows();
+			fuelle_array_fahrkarten();
+			set_aktuelle_position();
+			
+			
+			
+			
+			
 			
 			// TODO 1 seemeile weg brechnen
 			
@@ -252,11 +275,33 @@ public class Auftraegs_Fahrkarten_Erzeugen {
 		
 		
 		if (endhafen.equals("Emd")) {
-			ziel_point= Orte_Koordinaten.getPointAt(0);
+			ziel_point= Orte_Koordinaten.getPointAt(6);
 			// Weg ausrechnen
 			array_weg_berechnung_temporär = Finde_Kuerzesten_Weg.get_kurzen_weg_zwei_punkte(current_point,ziel_point);		
 			fuelle_array_fahrkarten();
 			set_aktuelle_position();
+			
+			
+			array_weg_berechnung_temporär = Finde_Kuerzesten_Weg.get_kurzen_weg_zwei_punkte(current_point,Orte_Koordinaten.getPointAt(5));		
+			fuelle_array_fahrkarten();
+			set_aktuelle_position();
+			
+			array_weg_berechnung_temporär = Finde_Kuerzesten_Weg.get_kurzen_weg_zwei_punkte(current_point,Orte_Koordinaten.getPointAt(4));		
+			fuelle_array_fahrkarten();
+			set_aktuelle_position();
+			
+			geschwindkeit=geschwindkeit_revier;
+			
+			array_weg_berechnung_temporär = Finde_Kuerzesten_Weg.get_kurzen_weg_zwei_punkte(current_point,Orte_Koordinaten.getPointAt(3));		
+			fuelle_array_fahrkarten();
+			set_aktuelle_position();
+			
+			geschwindkeit=geschwindkeit_revier;
+			array_weg_berechnung_temporär = Finde_Kuerzesten_Weg.get_kurzen_weg_zwei_punkte(current_point,Orte_Koordinaten.getPointAt(0));		
+			fuelle_array_fahrkarten();
+			set_aktuelle_position();
+			
+			
 			
 			
 			

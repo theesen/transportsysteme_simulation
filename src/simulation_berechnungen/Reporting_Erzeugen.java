@@ -41,7 +41,8 @@ public class Reporting_Erzeugen {
 		 
 	}
 	
-	public static void set_gesamt_zeit(int Schiffs_id, int Vorgang){
+	public static void set_gesamt_zeit(int Schiffs_id, int Vorgang, int aufenthalt_zeit){
+		report.set(Schiffs_id, 1, aufenthalt_zeit)	;
 		report.set(Schiffs_id, 2, Vorgang)	;
 		report.set(Schiffs_id, 6, true)	;
 		
@@ -52,7 +53,7 @@ public class Reporting_Erzeugen {
 		
 	}
 	
-	public static void printreport(int aufenthalt_zeit) throws IOException{
+	public static void printreport() throws IOException{
 		
 		int numRows = report.getNumRows();
         int aufenthalts_zeits;
@@ -62,8 +63,8 @@ public class Reporting_Erzeugen {
             
         	//aufenthalts_zeits = (Integer) report.get(i,1);
         	zeit_aufsee = (Integer) get_zeit_auf_see(i);
-        	
-        	fahrzeit = zeit_aufsee-aufenthalt_zeit;
+        	aufenthalts_zeits = (Integer) report.get(i, 1);
+        	fahrzeit = zeit_aufsee-aufenthalts_zeits;
         	report.set(i, 1, fahrzeit);
 	
         	
@@ -295,6 +296,7 @@ public class Reporting_Erzeugen {
         report_output = new String[numRows];
         
         Object[][] test = Tabelle_Auftrag_Schiffsdaten.getDatei_array();
+        
         for (int i=0; i < numRows; i++) {
             
         	System.out.println("*---------------"+report.get(i,0)+"--------------------*");

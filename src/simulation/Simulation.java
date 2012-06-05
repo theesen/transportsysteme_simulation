@@ -170,11 +170,11 @@ public class Simulation extends SimState {
              mg.isMovable = true; 
              agents.addGeometry(mg);
         //     schedule.scheduleRepeating(a);
-			
+           
             Reporting_Erzeugen.add_schiffe(i);
 			
 //			agents.addGeometry(new MasonGeometry(a.getGeometry()));
-			schedule.scheduleRepeating(1.0,i,a,1.0);
+			schedule.scheduleRepeating(1.0,0,a,1.0);
 			
 			}
 			

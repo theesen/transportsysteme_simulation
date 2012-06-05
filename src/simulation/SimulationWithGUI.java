@@ -55,7 +55,7 @@ public class SimulationWithGUI extends GUIState{
 		super.init(controller);
 		
 		display = new Display2D(Simulation.WIDTH, Simulation.HEIGHT, this);
-		display.attach(landPortrayal, "Landschaft");
+		//display.attach(landPortrayal, "Landschaft");
 		display.attach(agentPortrayal, "Agenten");
 		display.attach(ortePortrayal, "Orte");
 		display.attach(a_punktePortrayal, "A_Punkte");
@@ -85,16 +85,17 @@ public class SimulationWithGUI extends GUIState{
 	
 	private void setupPortrayals(){
 		Simulation welt = (Simulation)state;
+		agentPortrayal.setField(welt.agents);
+		agentPortrayal.setPortrayalForAll(new OvalPortrayal2D(Color.RED, 0.5,true));
 		
-		landPortrayal.setField(welt.see);
-		System.out.println(Simulation.NUM_AGENTS);
-		landPortrayal.setPortrayalForAll(new GeomPortrayal(Color.BITMASK,true)); 
+//		landPortrayal.setField(welt.see);
+//		System.out.println(Simulation.NUM_AGENTS);
+//		landPortrayal.setPortrayalForAll(new GeomPortrayal(Color.GRAY,true)); 
 		
 		ortePortrayal.setField(welt.orte);
         ortePortrayal.setPortrayalForAll(new GeomPortrayal(Color.OPAQUE,true));
         
-		agentPortrayal.setField(welt.agents);
-		agentPortrayal.setPortrayalForAll(new OvalPortrayal2D(Color.RED, 0.5,true));
+		
 		
 		
         
