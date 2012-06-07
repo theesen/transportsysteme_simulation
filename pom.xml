@@ -20,6 +20,14 @@
 			
 			
 		</dependency>
+		
+		<dependency>
+	<groupId>log4j</groupId>
+	<artifactId>log4j</artifactId>
+	<version>1.2.17</version>
+	</dependency>
+		
+		
 		<dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -57,7 +65,7 @@
   </dependencies>
   
 <repositories>
-   <!--    	<repository>
+      	<repository>
     <id>lib</id>
     <name>lib</name>
     <releases>
@@ -68,7 +76,7 @@
         <enabled>false</enabled>
     </snapshots>
     <url>file://${project.basedir}/lib</url>
-</repository> -->
+</repository> 
         <repository>
             <id>maven2-repository.dev.java.net</id>
             <name>Java.net repository</name>

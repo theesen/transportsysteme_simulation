@@ -7,6 +7,10 @@ package simulation_daten;
 
 import java.util.Arrays;
 
+import org.apache.log4j.Logger;
+
+import simulation.Agent;
+
 import daten.Tabelle_Auftrag_Allgemein;
 
 
@@ -22,7 +26,7 @@ public class Array_Auftraege_Status {
 	public  static Tabelle_Auftrag_Allgemein array_auftrag_allgemein;
 	public  static Object[][] auftraege_emden;
 	public  static Object[][] auftraege_norddeich;
-	
+	private static Logger logger = Logger.getLogger( Array_Auftraege_Status.class );
 	public Array_Auftraege_Status() {
 		
 		
@@ -120,10 +124,12 @@ public class Array_Auftraege_Status {
 		if (warteliste.length != 0){
 		int ASC = 1; 
 		warteliste=simulation_daten.Array_Sortier_Manager.sort(warteliste, new int[]{0,1,2}, new int[]{ASC,ASC,ASC});  
-		System.out.println("Warteliste Emden");
+		logger.info("Warteliste Emden");
+		
+		
 		for (Object[] arr :  warteliste) {
 			
-            System.out.println(Arrays.toString(arr));
+			logger.info(Arrays.toString(arr));
 		}
 		
 		
@@ -176,10 +182,10 @@ public class Array_Auftraege_Status {
 		if (warteliste.length != 0){
 			int ASC = 1; 
 			warteliste=simulation_daten.Array_Sortier_Manager.sort(warteliste, new int[]{0,1,2}, new int[]{ASC,ASC,ASC});  
-			System.out.println("Warteliste Norddeich");
+			logger.info("Warteliste Norddeich");
 			for (Object[] arr :  warteliste) {
 				
-	            System.out.println(Arrays.toString(arr));
+				logger.info(Arrays.toString(arr));
 			}
 			
 			

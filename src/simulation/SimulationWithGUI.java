@@ -1,14 +1,13 @@
 package simulation;
 
 
-import guis.AWTConsole;
-
-
 import java.awt.Color;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 
 import javax.swing.JFrame;
+
+import org.apache.log4j.PropertyConfigurator;
 
 import sim.display.Controller;
 import sim.display.Display2D;
@@ -17,6 +16,8 @@ import sim.engine.SimState;
 import sim.portrayal.geo.GeomPortrayal;
 import sim.portrayal.geo.GeomVectorFieldPortrayal;
 import sim.portrayal.simple.OvalPortrayal2D;
+import simulation_mason_klassen.Console_Simulation;
+
 
 public class SimulationWithGUI extends GUIState{
 	
@@ -55,7 +56,7 @@ public class SimulationWithGUI extends GUIState{
 		super.init(controller);
 		
 		display = new Display2D(Simulation.WIDTH, Simulation.HEIGHT, this);
-		//display.attach(landPortrayal, "Landschaft");
+		display.attach(landPortrayal, "Landschaft");
 		display.attach(agentPortrayal, "Agenten");
 		display.attach(ortePortrayal, "Orte");
 		display.attach(a_punktePortrayal, "A_Punkte");
@@ -88,9 +89,9 @@ public class SimulationWithGUI extends GUIState{
 		agentPortrayal.setField(welt.agents);
 		agentPortrayal.setPortrayalForAll(new OvalPortrayal2D(Color.RED, 0.5,true));
 		
-//		landPortrayal.setField(welt.see);
-//		System.out.println(Simulation.NUM_AGENTS);
-//		landPortrayal.setPortrayalForAll(new GeomPortrayal(Color.GRAY,true)); 
+		landPortrayal.setField(welt.see);
+		System.out.println(Simulation.NUM_AGENTS);
+		landPortrayal.setPortrayalForAll(new GeomPortrayal(Color.GRAY,true)); 
 		
 		ortePortrayal.setField(welt.orte);
         ortePortrayal.setPortrayalForAll(new GeomPortrayal(Color.OPAQUE,true));
@@ -119,7 +120,7 @@ public class SimulationWithGUI extends GUIState{
 	}
 	
 	public static void main (String[] args){
-		
+		PropertyConfigurator.configureAndWatch( "log4j-3.properties", 60*1000 );
 		//new konsole("Konsole"); // Konsole auslesen und anzeigen (alles ab hier)
 	//	new AWTConsole();
 		SimulationWithGUI SimulationGUI = new SimulationWithGUI();

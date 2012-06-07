@@ -43,7 +43,7 @@ public class Reporting_Erzeugen {
 	
 	public static void set_gesamt_zeit(int Schiffs_id, int Vorgang, int aufenthalt_zeit){
 		report.set(Schiffs_id, 1, aufenthalt_zeit)	;
-		report.set(Schiffs_id, 2, Vorgang)	;
+		//report.set(Schiffs_id, 2, Vorgang)	;
 		report.set(Schiffs_id, 6, true)	;
 		
 		
@@ -275,7 +275,7 @@ public class Reporting_Erzeugen {
 		int zeit_auf_see = 0;
 		int zeit_im_hafen = 0;
 		int seemeilen = 0; 
-		int wartezeit = 1;
+		int wartezeit = 0;
 		Boolean fertig = false;
 		String Schiffs_id_string = "Schiffs ID " + Schiffs_id;
 		report.Add(Schiffs_id_string, Schiffs_id)	; //0

@@ -1,22 +1,23 @@
 package simulation;
 
-import gui_komponenten.Gui_Tabellen;
 import guis.Init_Gui;
 
-import java.io.File;
 import java.io.FileNotFoundException;
+
+import org.apache.log4j.Logger;
 
 import jobs.Auftragsdaten_Auslesen;
 import jobs.Schiffsdaten_Auslesen;
 import sim.engine.SimState;
 import sim.field.geo.GeomVectorField;
-import sim.io.geo.ShapeFileImporter;
 import sim.util.geo.MasonGeometry;
 import simulation_berechnungen.Reporting_Erzeugen;
+import simulation_berechnungen.Sammlung_Berechnungen;
 import simulation_koordinaten.Orte_Koordinaten;
 import simulation_koordinaten.Windpark_A_Koordinaten;
 import simulation_koordinaten.Windpark_B_Koordinaten;
 import simulation_koordinaten.Windpark_C_Koordinaten;
+import simulation_mason_klassen.ShapeFileImporter2;
 
 import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.Point;
@@ -32,13 +33,28 @@ public class Simulation extends SimState {
 	/**
 	 * 
 	 */
+	private static Logger logger = Logger.getLogger( Simulation.class );
+	public static Boolean gameover = false;
+	/**
+	 * @return the gameover
+	 */
+	public static Boolean getGameover() {
+		return gameover;
+	}
+	/**
+	 * @param gameover the gameover to set
+	 */
+	public static void setGameover(Boolean Gameover) {
+		gameover = Gameover;
+	}
+
 	public int schiffs_rowcount;
 	
 	public int columncount;
 	
 	public static Object[][]schiffe_daten_agents= new Object[100][5]; 
 	
-	private Point location;
+	//private Point location;
 	
 	private static final long serialVersionUID = -1113018274619047013L;
 	
@@ -145,7 +161,7 @@ public class Simulation extends SimState {
 	
 	private void addAgents(){
 		
-			
+		double abweichung = 0.00000000000001;
 
 			
 			// Schiffe wie in Schiffe.txt angegeben platzieren und Agenten erzeugen 
@@ -164,7 +180,21 @@ public class Simulation extends SimState {
 			a = new Agent(i,schiff_name,heimathafen,geschw_revier,geschw_marsch);
 			//a = new Agent(random.nextInt(8));
 			// Location des Agents setzen 
-			a.setLocation(schiffe_daten_agents_getPointAt(i));
+			
+			
+			
+			 
+            abweichung = abweichung + abweichung;
+            Point test = schiffe_daten_agents_getPointAt(i) ;
+            double x = test.getX();
+            double y = test.getY();
+            
+            x = x + abweichung;
+            
+            test = Sammlung_Berechnungen.Erzeuge_Punkt_aus_Koordinaten(x, y);
+
+            logger.debug( test);
+			a.setLocation(test);
 			
 			 MasonGeometry mg = new MasonGeometry(a.getGeometry()); 
              mg.isMovable = true; 

@@ -8,9 +8,9 @@ package simulation;
  *
  */
 
-import guis.AWTConsole;
-
 import java.io.IOException;
+
+import org.apache.log4j.Logger;
 
 import sim.engine.SimState;
 import sim.engine.Steppable;
@@ -20,49 +20,58 @@ import simulation_berechnungen.Reporting_Erzeugen;
 import simulation_daten.Array_Auftraege_Status;
 import simulation_daten.Array_Fahrkarten;
 import simulation_koordinaten.Orte_Koordinaten;
-
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.Point;
-import com.vividsolutions.jts.geom.util.AffineTransformation;
 
 /**
  * @param args
  */
 
 public class Agent implements Steppable {
-
-	int schiffs_id;
-	int direction;
-	Point standort_koordinate = null;
-	private static final long serialVersionUID = -1113018274619047013L;
-	int vorgang = 0;
-	int geschw_revierfahrt;
-	int geschw_marschfahrt;
-	int current_row = 0;
-	String heimathafen;
-	String schiff_name;
-	Boolean schiff_ist_beschaeftigt = false;
-	Array_Auftraege_Status array_auftraege_status = new Array_Auftraege_Status();
-	Array_Fahrkarten<Object> fahrweg_fahrkarte;
-	int Auftragsnummer;
-	Object frei_auftragsnr;
-	Coordinate coord = new Coordinate();
-	double moveRate = 100.0;
-	PointMoveTo pointMoveTo = new PointMoveTo();
-	int schiff_muss_warten;
-	Boolean schiff_wartet = false;
-	int akutelle_geschwindigkeit;
-	int rowcount;
-	int geschwindigkeit_in_minuten;
-	Boolean schiff_hat_keinen_auftrag_mehr = false;
-	int umschlags_zeit;
-	int aufenthalt_zeit = 0;
-	int output_cleaner = 0;
 	
-	public Agent(int id, String schiffs_name, String Heimathafen,
-		String geschwindigkeit_revierfahrt,
-		String geschwindigkeit_marschfahrt) {
+	private static Logger logger = Logger.getLogger( Agent.class );
+	private static final long serialVersionUID = -1113018274619047013L;
+	public int vorgang = 0;
+	
+	
+	
+	// Allgemeine Schiffsdaten
+	public int schiffs_id;
+	public int geschw_revierfahrt;
+	public int geschw_marschfahrt;
+	public String heimathafen;
+	public String schiff_name;
+	public Point startpunkt;
+	
+	// Auftragsdaten
+	public int Auftragsnummer;
+	public Boolean schiff_hat_keinen_auftrag_mehr = false;
+	public int laenge_der_fahrkarte;
+	public Boolean schiff_ist_beschaeftigt = false;
+	public Object freie_auftragsnummer;
+	public int wartezeit_schiff;
+	public Boolean schiff_wartet = false;
+	public int umschlags_zeit;
+	public int aufenthalt_zeit = 0;
+	
+	
+	// Daten für die Bewegung
+	public int akutelle_reihe_auf_fahrkarte = 0;
+	public int akutelle_geschwindigkeit;
+	public int geschwindigkeit_in_minuten;
+	public Point standort_punkt = null;
+	public Coordinate standort_koordinate = new Coordinate();
+	public PointMoveTo pointMoveTo = new PointMoveTo();
+	public Array_Fahrkarten<Object> fahrweg_fahrkarte;
+	public Array_Auftraege_Status array_auftraege_status= new Array_Auftraege_Status(); // Auftragsliste anlegen incl Status
+	
+	
+	/**
+	 * Init Schiffs Agent mit allen Allgemeinen Daten
+	 */
+	public Agent(int id, String schiffs_name, String Heimathafen,String geschwindigkeit_revierfahrt,String geschwindigkeit_marschfahrt)
+	{
 		geschw_revierfahrt = Integer.parseInt(geschwindigkeit_revierfahrt);
 		geschw_marschfahrt = Integer.parseInt(geschwindigkeit_marschfahrt);
 		schiff_name = schiffs_name;
@@ -70,84 +79,92 @@ public class Agent implements Steppable {
 		heimathafen = Heimathafen;
 	}
 
+	/**
+	 * Positionen setzten
+	 */	
 	public void setLocation(Point p) {
-		standort_koordinate = p;
+		standort_punkt = p;
 	}
-
-	
 
 	public Geometry getGeometry() {
-		return standort_koordinate;
+		return standort_punkt;
 	}
 	
 
+	/**
+	 * Auf gehts 
+	 */		
 	public void step(SimState state) {
-
+		
 		vorgang = vorgang + 1;
-	
-	
-	//	AWTConsole.clear();
-	
-		
-
-		
-
-		if (vorgang == 1){
-			coord.x=standort_koordinate.getX();
-			coord.y=standort_koordinate.getY();		
-			
+		logger.debug("Vorgang: " + vorgang);
+		// Aktuelle Koordinate setzten init
+		if (vorgang == 1) {
+			startpunkt =standort_punkt;
+			standort_koordinate.x = standort_punkt.getX();
+			standort_koordinate.y = standort_punkt.getY();
 		}
-		if (vorgang == 1738){
-			longdebug_nachricht();
-		}
+		
 		// Debug nachricht auswählen
-	longdebug_nachricht();
-	//	shortdebug_nachricht();
-		
-		
+		longdebug_nachricht();
+		// shortdebug_nachricht();
+				
 		gucken_ob_schiff_warten_muss();
 		
-		
+
 		if (schiff_wartet == false) {
+			logger.debug("schiff_wartet: " +schiff_wartet);
+			logger.debug("schiff_ist_beschaeftigt: " +schiff_ist_beschaeftigt);
 			if (schiff_ist_beschaeftigt == false) {
 				fahrtkarte_zuweisung();
 			}
-			if (!frei_auftragsnr.equals(false)  && !frei_auftragsnr.equals("Warten")) {
-
+			
+			
+			if (!freie_auftragsnummer.equals(false)	&& !freie_auftragsnummer.equals("Warten")) {
 				if (geschwindigkeit_in_minuten == 0) {
+					logger.debug("Schiff darf sich bewegen");
 					fahrkarte_ablaufen();
-					
 				} else {
+					logger.debug("Schiff darf sich nicht bewegen erst in " +geschwindigkeit_in_minuten +" minuten");
 					geschwindigkeit_in_minuten = geschwindigkeit_in_minuten - 1;
-					
 				}
-
 			} else {
-
-				if (schiff_hat_keinen_auftrag_mehr == false && !frei_auftragsnr.equals("Warten")) {
+				if (schiff_hat_keinen_auftrag_mehr == false	&& freie_auftragsnummer.equals(false))
+				{
+					logger.debug("Schiff hat keinen Auftrag mehr");
 					schiff_hat_keinen_auftrag_mehr = true;
-					
-					Reporting_Erzeugen.set_gesamt_zeit(schiffs_id,vorgang,aufenthalt_zeit); // Gesamtzeit setzten
+					Reporting_Erzeugen.set_gesamt_zeit(schiffs_id, vorgang,	aufenthalt_zeit); // Gesamtzeit setzten
 				}
 				
-				if (Reporting_Erzeugen.gucke_ob_alle_reports_fertig_sind() == true){
+				if (Reporting_Erzeugen.gucke_ob_alle_reports_fertig_sind() == true)
+				{
+					
+					logger.debug("Reporting_Erzeugen");
+					
 					state.finish();
 					
+					
+					if (Simulation.getGameover()==false ){
 					try {
 						Reporting_Erzeugen.printreport();
 					} catch (IOException e) {
 						System.out.println("Fehler ! Report konnte nicht erzeugt werden");
 						e.printStackTrace();
 					}
-				}
-				
-				
-				// 
-
-				//	System.out.println("Schiff hat keine Auftraeg mehr");
-
+					Simulation.setGameover(true);
+					}
+					
+					
+					
+				}		
 			}
 		}
+		
+		
+		
+		
+		
+		
 		zeiten_brechnen(); // Zeit im Hafen und Zeiten auf See
 		bewege_dich();
 		
@@ -160,23 +177,26 @@ public class Agent implements Steppable {
 	public void zeiten_brechnen(){
 		
 		
-		//Point vergleichs_position = Sammlung_Berechnungen.Erzeuge_Punkt_aus_Koordinaten(coord.x, coord.y);
+		logger.debug("Zeit wir berechnet");
 		
 		Point emden = Orte_Koordinaten.getPointAt(2);
 		Point norddeich = Orte_Koordinaten.getPointAt(0);
+		logger.debug("umschlags_zeit: "+umschlags_zeit+" | akutelle_geschwindigkeit: "+ akutelle_geschwindigkeit +" | standort_punkt"+ standort_punkt +" | ");
 		
-		if (umschlags_zeit!= 0 || akutelle_geschwindigkeit== 0 && (standort_koordinate.equals(emden) || standort_koordinate.equals(norddeich) ))
+		if (umschlags_zeit!= 0 || akutelle_geschwindigkeit== 0 && (standort_punkt.equals(emden) || standort_punkt.equals(norddeich) || standort_punkt.equals(startpunkt) ))
 		{
 			Reporting_Erzeugen.set_zeit_im_hafen(schiffs_id, 1);
-			
+			logger.debug(schiffs_id + " set_zeit_im_hafen");
 			if (umschlags_zeit==0){
 				Reporting_Erzeugen.set_wartezeit(schiffs_id, 1);
+				logger.debug(schiffs_id + " set_wartezeit");	
 			}
 			
 			
 		}else
 		{
 			Reporting_Erzeugen.set_zeit_auf_see(schiffs_id, 1);
+			logger.debug(schiffs_id + " set_zeit_auf_see");	
 		}
 		
 		
@@ -192,32 +212,32 @@ public class Agent implements Steppable {
 	public void fahrtkarte_zuweisung(){
 		
 		if (heimathafen.equals("Emd")) {
-
-			frei_auftragsnr = Array_Auftraege_Status.get_freie_Auftragsnummer_Emden(vorgang);
-		
+			logger.debug("Schiff kommt aus Emden");
+			freie_auftragsnummer = Array_Auftraege_Status.get_freie_Auftragsnummer_Emden(vorgang);
+			logger.debug("Schiff bekommt Auftragsnummer" +freie_auftragsnummer);
 			
-			if (!frei_auftragsnr.equals(false) && !frei_auftragsnr.equals("Warten")) {
-				System.out.println(Orte_Koordinaten.getAnzahl_orte());
-				fahrweg_fahrkarte = Auftraegs_Fahrkarten_Erzeugen.getfahrkarte((Integer) frei_auftragsnr,schiffs_id, geschw_revierfahrt,geschw_marschfahrt, heimathafen);
+			if (!freie_auftragsnummer.equals(false) && !freie_auftragsnummer.equals("Warten")) {
+				logger.debug("Schiff bekommt neue Fahrkarte");
+				fahrweg_fahrkarte = Auftraegs_Fahrkarten_Erzeugen.getfahrkarte((Integer) freie_auftragsnummer,schiffs_id, geschw_revierfahrt,geschw_marschfahrt, heimathafen);
 				umschlags_zeit = 30; //Umschlagszeit 
-				Auftragsnummer = (Integer) frei_auftragsnr;
+				Auftragsnummer = (Integer) freie_auftragsnummer;
 				Array_Auftraege_Status.setAuftraege_emden_erledigt(Auftragsnummer);
 				schiff_ist_beschaeftigt = true;	
-				current_row = 0;
+				akutelle_reihe_auf_fahrkarte = 0;
 			}
 
 		} else if (heimathafen.equals("Nor")) {
-
-			frei_auftragsnr = Array_Auftraege_Status.get_freie_Auftragsnummer_Norddeich(vorgang);
-
-			if (!frei_auftragsnr.equals(false)  && !frei_auftragsnr.equals("Warten")) {
-				
-				fahrweg_fahrkarte = Auftraegs_Fahrkarten_Erzeugen.getfahrkarte((Integer) frei_auftragsnr,schiffs_id, geschw_revierfahrt,geschw_marschfahrt, heimathafen);
+			logger.debug("Schiff kommt aus Nordeich");
+			freie_auftragsnummer = Array_Auftraege_Status.get_freie_Auftragsnummer_Norddeich(vorgang);
+			logger.debug("Schiff bekommt Auftragsnummer" +freie_auftragsnummer);
+			if (!freie_auftragsnummer.equals(false)  && !freie_auftragsnummer.equals("Warten")) {
+				logger.debug("Schiff bekommt neue Fahrkarte");
+				fahrweg_fahrkarte = Auftraegs_Fahrkarten_Erzeugen.getfahrkarte((Integer) freie_auftragsnummer,schiffs_id, geschw_revierfahrt,geschw_marschfahrt, heimathafen);
 				umschlags_zeit = 30; // Umschlagszeit
-				Auftragsnummer = (Integer) frei_auftragsnr;
+				Auftragsnummer = (Integer) freie_auftragsnummer;
 				Array_Auftraege_Status.setAuftraege_norddeich_erledigt(Auftragsnummer);
 				schiff_ist_beschaeftigt = true;	
-				current_row = 0;
+				akutelle_reihe_auf_fahrkarte = 0;
 			}
 			
 		}
@@ -226,29 +246,27 @@ public class Agent implements Steppable {
 	
 	public void fahrkarte_ablaufen(){
 	
-		rowcount = fahrweg_fahrkarte.getNumRows() - 1;
+		laenge_der_fahrkarte = fahrweg_fahrkarte.getNumRows() - 1;
 		
+	
 
-		
-
-		if (current_row != rowcount) {
-			coord.x = (Double) fahrweg_fahrkarte.get(current_row, 0);
-			coord.y = (Double) fahrweg_fahrkarte.get(current_row, 1);
+		if (akutelle_reihe_auf_fahrkarte != laenge_der_fahrkarte) {
+			
+			standort_koordinate.x = (Double) fahrweg_fahrkarte.get(akutelle_reihe_auf_fahrkarte, 0);
+			standort_koordinate.y = (Double) fahrweg_fahrkarte.get(akutelle_reihe_auf_fahrkarte, 1);
 			
 			// Geschwindigkeit
-			akutelle_geschwindigkeit=(Integer) fahrweg_fahrkarte.get(current_row,3);
+			akutelle_geschwindigkeit=(Integer) fahrweg_fahrkarte.get(akutelle_reihe_auf_fahrkarte,3);
 			geschwindigkeit_dauer_fuer_einen_step(); 
 			// TODO in Double umsetzten
 			double seemeile = 0.5;
 			Reporting_Erzeugen.seemeilen(schiffs_id, seemeile);
 			// Wartezeit
-			schiff_muss_warten= schiff_muss_warten +(Integer) fahrweg_fahrkarte.get(current_row,4);
-			aufenthalt_zeit = aufenthalt_zeit + schiff_muss_warten;
-			
-			//Reporting_Erzeugen.set_wartezeit(schiffs_id, schiff_muss_warten);
+			wartezeit_schiff= wartezeit_schiff +(Integer) fahrweg_fahrkarte.get(akutelle_reihe_auf_fahrkarte,4);
+			aufenthalt_zeit = aufenthalt_zeit + wartezeit_schiff;
 			
 			
-			current_row = current_row + 1;
+			akutelle_reihe_auf_fahrkarte = akutelle_reihe_auf_fahrkarte + 1;
 			
 		} else {
 			if (heimathafen.equals("Emd")) {
@@ -279,17 +297,21 @@ public class Agent implements Steppable {
 	
 	
 	public void gucken_ob_schiff_warten_muss(){
+		/**
+		 *  Wenn Wartezeit und Umschlagszeit ungleich 0 dann muss nicht gewartete werden sonst wird eine der Variablen heruntergezählt
+		 */	
+		logger.debug("Gucken ob Schiff noch Warten muss");
 		
 		schiff_wartet = false;
-		if (schiff_muss_warten!=0 || umschlags_zeit!=0){
-			
-		if (schiff_muss_warten!=0){schiff_muss_warten = schiff_muss_warten -1;}
+		
+		if (wartezeit_schiff!=0 || umschlags_zeit!=0)
+		{
+		if (wartezeit_schiff!=0){wartezeit_schiff = wartezeit_schiff -1;}
 		if (umschlags_zeit!=0 ){umschlags_zeit = umschlags_zeit -1;}
-		
 		schiff_wartet = true;
-		
 		}
 		
+		logger.debug("Schiff muss warten: "+ schiff_wartet);
 		
 		
 		
@@ -303,33 +325,33 @@ public class Agent implements Steppable {
 		
 		
 		
-        System.out.println("Zeit: "+stunden+" Stunden "+restminuten+ " Minuten");
-		System.out.println("*---------------------------------------------------------*");
+		logger.info("Zeit: "+stunden+" Stunden "+restminuten+ " Minuten");
+		logger.info("*---------------------------------------------------------*");
 		
-		System.out.println("Vorgang " + vorgang + " wird gestartet mit Schiff: " + schiffs_id);
-		System.out.println("Schiffs Id: " + schiffs_id + " Schiffs Name: "
+		logger.info("Vorgang " + vorgang + " wird gestartet mit Schiff: " + schiffs_id);
+		logger.info("Schiffs Id: " + schiffs_id + " Schiffs Name: "
 				+ schiff_name + " Heimathafen: " + heimathafen
 				+ " Geschwindigkeit Revierfahrt: " + geschw_revierfahrt
 				+ " Geschwindigkeit Marschfahrt: " + geschw_marschfahrt
 				+ " Schiff ist beschaeftigt: " + schiff_ist_beschaeftigt);
 		
-		System.out.println("Schiff muss noch: " +schiff_muss_warten+ " warten");
-		System.out.println("Schiff muss noch: " +umschlags_zeit + " umschlagen");
-		System.out.println("Schiff fährt mit: " +akutelle_geschwindigkeit+ " Knoten");
+		logger.info("Schiff muss noch: " +wartezeit_schiff+ " warten");
+		logger.info("Schiff muss noch: " +umschlags_zeit + " umschlagen");
+		logger.info("Schiff fährt mit: " +akutelle_geschwindigkeit+ " Knoten");
 		
-		System.out.println("Schiff hat Auftrag: "+ frei_auftragsnr+ " bekommen");
+		logger.info("Schiff hat Auftrag: "+ freie_auftragsnummer+ " bekommen");
 	
-		System.out.println("Auftrags Koordinate: " + current_row+ " von " + rowcount);
+		logger.info("Auftrags Koordinate: " + akutelle_reihe_auf_fahrkarte+ " von " + laenge_der_fahrkarte);
 		
-		System.out.println("Akutelle Koordinate: "+coord);
-		System.out.println("Zeit bis zum nächsten Koordinatensprung: " +geschwindigkeit_in_minuten);
-		System.out.println("Zeit auf See: " + Reporting_Erzeugen.get_zeit_auf_see(schiffs_id) +"min");
-		System.out.println("Zeit im Hafen: " + Reporting_Erzeugen.get_zeit_im_hafen(schiffs_id)+ "min");
-		System.out.println("Zurückgelegte Seemeilen: " +Reporting_Erzeugen.get_seemeilen(schiffs_id)+ "sm");
-		System.out.println("Wartezeit :" + Reporting_Erzeugen.get_wartezeit(schiffs_id));
+		logger.info("Akutelle Koordinate: "+standort_koordinate);
+		logger.info("Zeit bis zum nächsten Koordinatensprung: " +geschwindigkeit_in_minuten);
+		logger.info("Zeit auf See: " + Reporting_Erzeugen.get_zeit_auf_see(schiffs_id) +"min");
+		logger.info("Zeit im Hafen: " + Reporting_Erzeugen.get_zeit_im_hafen(schiffs_id)+ "min");
+		logger.info("Zurückgelegte Seemeilen: " +Reporting_Erzeugen.get_seemeilen(schiffs_id)+ "sm");
+		logger.info("Wartezeit :" + Reporting_Erzeugen.get_wartezeit(schiffs_id));
 		
-		System.out.println("Aufenthaltszeit: "+ aufenthalt_zeit +"min");
-		System.out.println("*---------------------------------------------------------*");
+		logger.info("Aufenthaltszeit: "+ aufenthalt_zeit +"min");
+		logger.info("*---------------------------------------------------------*");
 	}
 	
 	
@@ -338,11 +360,11 @@ public class Agent implements Steppable {
 		int restminuten =  vorgang % 60;
 		int stunden = (vorgang / 60); 
 
-        System.out.println("Zeit: "+stunden+" Stunden "+restminuten+ " Minuten");
-		System.out.println("*---------------------------------------------------------*");
-		System.out.println("Vorgang " + vorgang + " wird gestartet mit Schiff: " + schiffs_id);
-		System.out.println("Schiff hat Auftrag: "+ frei_auftragsnr+ " bekommen");
-		System.out.println("*---------------------------------------------------------*");
+        logger.info("Zeit: "+stunden+" Stunden "+restminuten+ " Minuten");
+		logger.info("*---------------------------------------------------------*");
+		logger.info("Vorgang " + vorgang + " wird gestartet mit Schiff: " + schiffs_id);
+		logger.info("Schiff hat Auftrag: "+ freie_auftragsnummer+ " bekommen");
+		logger.info("*---------------------------------------------------------*");
 		
 	}
 	
@@ -351,21 +373,17 @@ public class Agent implements Steppable {
 	public void bewege_dich(){
 		
 		
-		AffineTransformation translate = null;
-		pointMoveTo.setCoordinate(coord);
-		standort_koordinate.apply(pointMoveTo);
-//		translate = AffineTransformation.translationInstance(coord.x ,coord.y);
-//		standort_koordinate.apply(translate);
+		logger.debug("Schiff bewegt sich");
+		pointMoveTo.setCoordinate(standort_koordinate);
+		standort_punkt.apply(pointMoveTo);
+
 	}
 	
 	
-	public void geschwindigkeit_dauer_fuer_einen_step(){
-		
+		public void geschwindigkeit_dauer_fuer_einen_step(){
 		Double zeit = 0.0;
 		zeit = 0.926/(akutelle_geschwindigkeit*1.852);
 		zeit = zeit * 60;
-//		zeit = ;
-//		System.out.println(zeit);
 		geschwindigkeit_in_minuten =(int) Math.round(zeit);
 		geschwindigkeit_in_minuten = geschwindigkeit_in_minuten-1;
 	}
